@@ -1,0 +1,57 @@
+.customerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    border: 1.5px solid lightgray;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    height: 40px;
+  }
+  
+  .customerName {
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: start;
+    flex: 1 1 60%;
+    font-size: 5vw;
+    padding-right: 4px;
+  }
+
+  .customerDetails {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1 1 40%;
+  }
+  
+  .customerIconsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  
+  .customerTab {
+    font-size: 18px;
+    font-weight: bold;
+    color: gray;
+    text-align: center;
+  }
+  
+  .beerIcon {
+    padding: 3px;
+    cursor: pointer;
+    color: gold;
+  }
+
+  .addIcon {
+    padding: 3px;
+    cursor: pointer;
+    color: purple;
+  }

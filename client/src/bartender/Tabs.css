@@ -1,0 +1,6 @@
+.tabsContainer {
+    list-style: none;
+    overflow-y: auto;
+    padding: 5px;
+    margin: 0;
+}

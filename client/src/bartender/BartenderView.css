@@ -1,0 +1,41 @@
+.headers {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding-inline: 7%;
+}
+
+.headers h1 {
+    color: gray;
+    font-size: 30px;
+}
+
+.headers h1.active {
+    color: black;
+    font-size: 36px;
+}
+
+.searchBar {
+    display: flex;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 5px;
+    margin-inline: 4%;
+    border-radius: 7px;
+    border: 1px solid #ccc; /* add a slight gray border */
+}
+  
+.searchBar input {
+    border: none;
+    outline: none;
+    flex: 1;
+    margin-left: 5px;
+    font-size: 16px;
+    background-color: transparent;
+}
+  
+.searchIcon {
+    color: black;
+}
+
