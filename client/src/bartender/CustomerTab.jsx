@@ -5,16 +5,10 @@ import SportsBarIcon from '@mui/icons-material/SportsBar';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 function CustomerTab({ customer }) {
-  const [showInputBox, setShowInputBox] = useState(false);
-
 
   const handleAddToTab = () => {
     const amount = prompt('Enter amount to add to tab:', 0);
     // TODO: Add amount to customer tab
-  };
-
-  const handleClose = () => {
-    setShowInputBox(false);
   };
 
   const handleViewDrinks = () => {
