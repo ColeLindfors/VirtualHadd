@@ -4,31 +4,47 @@ import './BartenderView.css';
 import SearchIcon from '@mui/icons-material/Search';
 
 function BartenderView() {
-  const [activeView, setActiveView] = useState('tabs'); // add activeTab state variable
+  const [activeView, setActiveView] = useState('Tabs'); // add activeTab state variable
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearchIconClick = () => {
-    const input = document.querySelector('.searchBar input');
-    input.focus();
+  //function to handle header click, setting active tab to the tab that was clicked
+  const handleHeaderClick = (event) => {
+    setActiveView(event.target.innerHTML);
+    console.log("setActiveView: ", activeView);
   };
 
-  const handleHeaderClick = (tab) => {
-    setActiveView(tab);
+  // const handleHeaderClick = (tab) => {
+  //   setActiveView(tab.innerHTML);
+  //   console.log("setActiveView: ", tab.innerHTML);
+  // };
+
+  const handleSearchBarClick = () => {
+    const input = document.querySelector('.searchBar input');
+    input.focus();
   };
 
   return (
     <div className="bartenderViewContainer">
       <div className="headers">
-        <h1 className={activeView === 'orders' ? 'active' : ''}>Orders</h1>
-        <h1 className={activeView === 'tabs' ? 'active' : ''}>Tabs</h1>
+        <h1 
+          onClick={handleHeaderClick} 
+          className={activeView === 'Orders' ? 'active' : ''}
+        >
+          Orders
+        </h1>
+        <h1 
+          onClick={handleHeaderClick} 
+          className={activeView === 'Tabs' ? 'active' : ''}
+        >
+          Tabs
+        </h1>
       </div>
-      <div className="searchBar">
+      <div className="searchBar" onClick={handleSearchBarClick}>
         <SearchIcon 
-          onClick={handleSearchIconClick}
           className="searchIcon"
           sx={{fontSize: 30}} 
         />

@@ -10,9 +10,9 @@
     width: 90%;
     max-width: 800px;
     height: 40px;
-  }
+}
   
-  .customerName {
+.customerName {
     color: black;
     white-space: nowrap;
     overflow: hidden;
@@ -21,37 +21,43 @@
     flex: 1 1 60%;
     font-size: 5vw;
     padding-right: 4px;
-  }
+}
 
-  .customerDetails {
+.customerDetails {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     flex: 1 1 40%;
-  }
+}
   
-  .customerIconsContainer{
+.customerIconsContainer{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-  }
+}
   
-  .customerTab {
+.customerTab {
     font-size: 18px;
     font-weight: bold;
     color: gray;
     text-align: center;
-  }
-  
-  .beerIcon {
-    padding: 3px;
-    cursor: pointer;
-    color: gold;
-  }
+}
 
-  .addIcon {
+.beerIcon, .addIcon {
     padding: 3px;
-    cursor: pointer;
-    color: purple;
+    font-size: 30px !important;
+}
+
+.beerIcon:active, .addIcon:active {
+    transform: scale(1.3);
+    transition: all 0.2s ease-in-out;
+}
+  
+.beerIcon {
+    color: #E4CB1A;
+}
+
+.addIcon {
+color: #603D97;
   }

@@ -3,7 +3,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    padding-inline: 7%;
+    padding-inline: 10%;
+    padding-top: 4%;
 }
 
 .headers h1 {
@@ -24,15 +25,19 @@
     margin-inline: 4%;
     border-radius: 7px;
     border: 1px solid #ccc; /* add a slight gray border */
+    box-sizing: border-box;
 }
   
 .searchBar input {
     border: none;
     outline: none;
-    flex: 1;
     margin-left: 5px;
     font-size: 16px;
     background-color: transparent;
+}
+
+.searchBar:focus-within {
+    box-shadow: 0 0 5px #d9b3ff;
 }
   
 .searchIcon {
