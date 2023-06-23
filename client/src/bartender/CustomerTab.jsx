@@ -4,11 +4,12 @@ import './CustomerTab.css';
 import SportsBarIcon from '@mui/icons-material/SportsBar';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-function CustomerTab({ customer }) {
+function CustomerTab({ customer, setSelectedCustomer }) {
 
   const handleAddToTab = () => {
-    const amount = prompt('Enter amount to add to tab:', 0);
+    // const amount = prompt('Enter amount to add to tab:', 0);
     // TODO: Add amount to customer tab
+    setSelectedCustomer(customer);
   };
 
   const handleViewDrinks = () => {
