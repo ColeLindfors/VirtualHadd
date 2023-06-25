@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import BartenderView from './bartender/BartenderView';
 
 function App() {
