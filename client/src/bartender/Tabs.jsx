@@ -7,16 +7,7 @@ function Tabs({ customers, searchTerm }) {
 
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
-  // const filteredCustomers = customers.filter((customer) =>
-  //   `${customer.firstName} ${customer.lastName}`
-  //     .toLowerCase()
-  //     .includes(searchTerm.toLowerCase())
-  // );
-
-  // const positiveBalanceCustomers = filteredCustomers.filter((customer) => customer.tab_balance > 0);
-  // const zeroBalanceCustomers = filteredCustomers.filter((customer) => customer.tab_balance <= 0);
   function filterCustomers(customers, searchTerm) {
-    console.log("customers:",customers);
     const positiveBalanceCustomers = [];
     const zeroBalanceCustomers = [];
   
@@ -31,8 +22,6 @@ function Tabs({ customers, searchTerm }) {
         }
       }
     });
-  
-    console.log("positiveBalanceCustomers: ", positiveBalanceCustomers);
     return { positiveBalanceCustomers, zeroBalanceCustomers };
   }
 
