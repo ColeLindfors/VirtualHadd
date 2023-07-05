@@ -7,30 +7,67 @@ function Tabs({ customers, searchTerm }) {
 
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
-  const filteredCustomers = customers.filter((customer) =>
-    `${customer.firstName} ${customer.lastName}`
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-  );
+  // const filteredCustomers = customers.filter((customer) =>
+  //   `${customer.firstName} ${customer.lastName}`
+  //     .toLowerCase()
+  //     .includes(searchTerm.toLowerCase())
+  // );
+
+  // const positiveBalanceCustomers = filteredCustomers.filter((customer) => customer.tab_balance > 0);
+  // const zeroBalanceCustomers = filteredCustomers.filter((customer) => customer.tab_balance <= 0);
+  function filterCustomers(customers, searchTerm) {
+    console.log("customers:",customers);
+    const positiveBalanceCustomers = [];
+    const zeroBalanceCustomers = [];
+  
+    customers.forEach((customer) => {
+      if (`${customer.firstName} ${customer.lastName}`
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())) {
+        if (customer.tab > 0) {
+          positiveBalanceCustomers.push(customer);
+        } else {
+          zeroBalanceCustomers.push(customer);
+        }
+      }
+    });
+  
+    console.log("positiveBalanceCustomers: ", positiveBalanceCustomers);
+    return { positiveBalanceCustomers, zeroBalanceCustomers };
+  }
+
+  const { positiveBalanceCustomers, zeroBalanceCustomers } = filterCustomers(customers, searchTerm);
 
   return (
-    <div>
-      <ul className="tabsContainer">
-        {filteredCustomers.map((customer) => (
-          <li key={customer.id}>
-            <CustomerTab customer={customer} setSelectedCustomer={setSelectedCustomer}/>
-          </li>
-        ))}
-      </ul>
-      {selectedCustomer && (
-        <PopUp
-          customer={selectedCustomer}
-          customers={customers}
-          setSelectedCustomer = {setSelectedCustomer}
-        />
+  <div className="tabsWrapper">
+    <ul className="tabsContainer">
+      {positiveBalanceCustomers.map((customer) => (
+        <li key={customer.id}>
+          <CustomerTab customer={customer} setSelectedCustomer={setSelectedCustomer}/>
+        </li>
+      ))}
+    </ul>
+      {zeroBalanceCustomers.length > 0 && (
+        <>
+          <h2>No Outstanding Balance</h2>
+          <ul className="tabsContainer">
+              {zeroBalanceCustomers.map((customer) => (
+                <li key={customer.id}>
+                  <CustomerTab customer={customer} setSelectedCustomer={setSelectedCustomer}/>
+                </li>
+              ))}
+          </ul>
+        </>
       )}
-    </div>
-  );
+    {selectedCustomer && (
+      <PopUp
+        customer={selectedCustomer}
+        customers={customers}
+        setSelectedCustomer = {setSelectedCustomer}
+      />
+    )}
+  </div>
+);
 }
 
 export default Tabs;
