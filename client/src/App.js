@@ -1,9 +1,13 @@
-import BartenderView from './bartender/BartenderView';
+import Home from './Home';
+import { UserProvider } from "./contexts/user.context";
+
 
 function App() {
   return (
     <div className="App">
-      <BartenderView/>
+      <UserProvider>
+        <Home />
+      </UserProvider>
     </div>
   );
 }

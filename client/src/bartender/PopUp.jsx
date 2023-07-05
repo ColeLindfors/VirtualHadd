@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './PopUp.css';
+import * as Realm from 'realm-web';
 
 function PopUp({ customer, customers, setSelectedCustomer }) {
 
@@ -40,25 +41,22 @@ function PopUp({ customer, customers, setSelectedCustomer }) {
     }
   };
 
-  // TODO: implement handleOKClick
-  const handleOKClick = () => {
+  async function handleOKClick() {
+    console.log('OK clicked');
     // update the customer's tab in the customers array
-    const updatedCustomers = customers.map((c) => {
-      if (c.id === customer.id) {
-        return {
-          ...c,
-          tab: c.tab + parseFloat(document.querySelector(".popupInput").value.replace(/^\$/, ""))
-        };
-      } else {
-        return c;
-      }
-    });
-    // update the customers array in the App component
-    customers = updatedCustomers;
-    // close the popup
+    const REALM_APP_ID = "application-0-gydmq";
+    const app = new Realm.App({ id: REALM_APP_ID });
+    const updateTab = async () => {
+      const incAmount = document.querySelector(".popupInput").value.substring(1);
+      app.currentUser.functions.incrementTabById({userId: customer.id, amount: parseFloat(incAmount)});
+    };
+    try {
+      updateTab();
+    } catch (error) {
+      console.error(error);
+    }
     setSelectedCustomer(null);
-  }
-
+  };
 
 
   const endsWithS = customer.firstName[customer.firstName.length - 1] === 's';

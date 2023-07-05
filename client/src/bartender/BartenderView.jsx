@@ -30,7 +30,10 @@ function BartenderView() {
       console.log("loginAndFetchTabs ran");
       const REALM_APP_ID = "application-0-gydmq";
       const app = new Realm.App({ id: REALM_APP_ID });
-      const credentials = Realm.Credentials.anonymous();
+      const credentials = Realm.Credentials.function({
+        username: "ColeLindfors",
+        password: "defaultpassword"
+      });
       try {
         const user = await app.logIn(credentials);
         const allCustomers = await user.functions.getAllTabs();
@@ -53,13 +56,13 @@ function BartenderView() {
       console.log("maintainTabs ran");
       const REALM_APP_ID = "application-0-gydmq";
       const app = new Realm.App({ id: REALM_APP_ID });
-      const  user = await app.logIn(Realm.Credentials.anonymous()); 
+      // ! MUST INSERT A TRY BLOCK HERE TOO
       // Connect to the database
       const  mongodb = app.currentUser.mongoClient("mongodb-atlas");
       const  collection = mongodb.db("VirtualHaddDB").collection("users");
       
       // Everytime a change happens in the stream, update the tab balance
-      for await (const change of collection.watch()) { 
+      for await (const change of collection.watch()) {
         // * Possible optimization: keep track of the last change that occured and only update if the change is different
         if(change.operationType === 'update') {
           const changedCustomerId = change.fullDocument._id.toString();
@@ -91,11 +94,6 @@ function BartenderView() {
     setActiveView(event.target.innerHTML);
     console.log("setActiveView: ", activeView);
   };
-
-  // const handleHeaderClick = (tab) => {
-  //   setActiveView(tab.innerHTML);
-  //   console.log("setActiveView: ", tab.innerHTML);
-  // };
 
   const handleSearchBarClick = () => {
     const input = document.querySelector('.searchBar input');
