@@ -51,8 +51,8 @@ function Tabs({ customers, searchTerm }) {
     {selectedCustomer && (
       <PopUp
         customer={selectedCustomer}
-        customers={customers}
         setSelectedCustomer = {setSelectedCustomer}
+        popUpType = "remove"
       />
     )}
   </div>

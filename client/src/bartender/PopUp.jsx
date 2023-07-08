@@ -2,7 +2,12 @@ import React, {useState} from 'react';
 import './PopUp.css';
 import * as Realm from 'realm-web';
 
-function PopUp({ customer, customers, setSelectedCustomer }) {
+/**
+  * The PopUp component is a modal that allows the bartender to add or remove money from a customer's tab.
+  * The popUpType is either "add" or "remove", which determines the functionality of the pop-up.
+ */
+function PopUp({ customer, setSelectedCustomer, popUpType }) {
+
 
   /**
    * Handles changes to the input field value, ensuring that the input value is formatted correctly.
@@ -41,14 +46,22 @@ function PopUp({ customer, customers, setSelectedCustomer }) {
     }
   };
 
+  
   async function handleOKClick() {
     console.log('OK clicked');
     // update the customer's tab in the customers array
     const REALM_APP_ID = "application-0-gydmq";
     const app = new Realm.App({ id: REALM_APP_ID });
     const updateTab = async () => {
-      const incAmount = document.querySelector(".popupInput").value.substring(1);
-      app.currentUser.functions.incrementTabById({userId: customer.id, amount: parseFloat(incAmount)});
+      const amount = document.querySelector(".popupInput").value.substring(1);
+      if (popUpType === "add") {
+        app.currentUser.functions.incrementTabById({userId: customer.id, amount: parseFloat(amount)});
+      } else if (popUpType === "remove") {
+        app.currentUser.functions.decrementTabById({userId: customer.id, amount: parseFloat(amount)});
+      }
+      else {
+        console.error("Invalid popUpType");
+      }
     };
     try {
       updateTab();
@@ -61,22 +74,33 @@ function PopUp({ customer, customers, setSelectedCustomer }) {
 
   const endsWithS = customer.firstName[customer.firstName.length - 1] === 's';
 
+  function removeAmount () {
+    if (customer.tab > 0) {
+      return customer.tab.toFixed(2);
+    } else {
+      return "0.00";
+    }
+  }
+
   return (
     <div className="overlay" onClick={() => setSelectedCustomer(null)}>
       <div 
         className="popupContainer"
-        onClick={(event) => event.stopPropagation()}
+        onClick={(event) => event.stopPropagation()} // Prevents clicks within the popup from closing the popup
       >
         <div className="popupUpperContainer">
-          <h1>Add</h1>
+          <h1>{popUpType === "remove" ? "Remove" : "Add"}</h1>
+          {/* <h1>Add</h1> */}
           <input 
             className="popupInput"
             inputMode="decimal" 
             placeholder="$0.00"
+            value={popUpType === "remove" ? "$" + customer.tab.toFixed(2) : ""}
             type="text"
             onChange={handleInputChange}
           />
-          <h1> To {customer.firstName}{endsWithS ? "'" : "'s"}</h1>
+          <h1> {popUpType === "remove" ? "From" : "To"} {customer.firstName}{endsWithS ? "'" : "'s"}</h1>
+          {(popUpType === "remove" ? <div className="currentBalanceDiv">${removeAmount()}</div> : null)}
           <h1>Tab</h1>
         </div>
         <div className="popupButtonsContainer">
