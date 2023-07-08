@@ -3,7 +3,6 @@ import * as Realm from 'realm-web';
 import Tabs from './Tabs';
 import './BartenderView.css';
 import SearchIcon from '@mui/icons-material/Search';
-import PopUp from './PopUp';
 
 function BartenderView() {
 
@@ -18,7 +17,7 @@ function BartenderView() {
       const REALM_APP_ID = "application-0-gydmq";
       const app = new Realm.App({ id: REALM_APP_ID });
       const credentials = Realm.Credentials.function({
-        username: "IanStratmoen",
+        username: "ColeLindfors",
         password: "defaultpassword"
       });
       try {
@@ -110,7 +109,8 @@ function BartenderView() {
           sx={{fontSize: 30}} 
         />
         <input
-          type="text" 
+          type="text"
+          autoCorrect="off"
           value={searchTerm} 
           onChange={handleSearch}
           placeholder="Search for a Lodger..."

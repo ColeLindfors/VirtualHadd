@@ -6,6 +6,7 @@ import PopUp from './PopUp';
 function Tabs({ customers, searchTerm }) {
 
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [popUpType, setPopUpType] = useState(null);
 
   function filterCustomers(customers, searchTerm) {
     const positiveBalanceCustomers = [];
@@ -24,6 +25,16 @@ function Tabs({ customers, searchTerm }) {
     });
     return { positiveBalanceCustomers, zeroBalanceCustomers };
   }
+  
+  /**
+   * @param {Object} customer - The customer object (including their tab) to show in the popup
+   * @param {String} popUpType - The type of popup to show, (default is null for no popup)
+   */
+  function showPopUp(customer, popUpType = null) {
+    setSelectedCustomer(customer);
+    setPopUpType(popUpType);
+  }
+
 
   const { positiveBalanceCustomers, zeroBalanceCustomers } = filterCustomers(customers, searchTerm);
 
@@ -32,7 +43,7 @@ function Tabs({ customers, searchTerm }) {
     <ul className="tabsContainer">
       {positiveBalanceCustomers.map((customer) => (
         <li key={customer.id}>
-          <CustomerTab customer={customer} setSelectedCustomer={setSelectedCustomer}/>
+          <CustomerTab customer={customer} showPopUp={showPopUp}/>
         </li>
       ))}
     </ul>
@@ -42,7 +53,7 @@ function Tabs({ customers, searchTerm }) {
           <ul className="tabsContainer">
               {zeroBalanceCustomers.map((customer) => (
                 <li key={customer.id}>
-                  <CustomerTab customer={customer} setSelectedCustomer={setSelectedCustomer}/>
+                  <CustomerTab customer={customer} showPopUp={showPopUp}/>
                 </li>
               ))}
           </ul>
@@ -50,9 +61,9 @@ function Tabs({ customers, searchTerm }) {
       )}
     {selectedCustomer && (
       <PopUp
+        showPopUp={showPopUp}
         customer={selectedCustomer}
-        setSelectedCustomer = {setSelectedCustomer}
-        popUpType = "remove"
+        popUpType = {popUpType}
       />
     )}
   </div>

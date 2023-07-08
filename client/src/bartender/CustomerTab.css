@@ -44,20 +44,15 @@
     text-align: center;
 }
 
-.beerIcon, .addIcon {
+.addIcon, .removeIcon {
     padding: 3px;
     font-size: 30px !important;
 }
-
-.beerIcon:active, .addIcon:active {
-    transform: scale(1.3);
-    transition: all 0.2s ease-in-out;
-}
   
-.beerIcon {
+.addIcon {
     color: #E4CB1A;
 }
 
-.addIcon {
+.removeIcon {
 color: #603D97;
   }

@@ -1,19 +1,20 @@
 import React from 'react';
-import { useState } from 'react';
 import './CustomerTab.css';
-import SportsBarIcon from '@mui/icons-material/SportsBar';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+// import SportsBarIcon from '@mui/icons-material/SportsBar';
+// import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
-function CustomerTab({ customer, setSelectedCustomer }) {
+function CustomerTab({ customer, showPopUp }) {
 
   const handleAddToTab = () => {
     // const amount = prompt('Enter amount to add to tab:', 0);
     // TODO: Add amount to customer tab
-    setSelectedCustomer(customer);
+    showPopUp(customer, 'add');
   };
 
-  const handleViewDrinks = () => {
-    // TODO: Navigate to drinks view for customer
+  const handleRemoveFromTab = () => {
+    showPopUp(customer, 'remove');
   };
 
   return (
@@ -23,13 +24,13 @@ function CustomerTab({ customer, setSelectedCustomer }) {
       <div className="customerDetails">
         <p className="customerTab">${customer.tab.toFixed(2)}</p>
         <div className="customerIconsContainer">
-          <SportsBarIcon
-            className="beerIcon"
+          <AddIcon
+            className="addIcon"
             onClick={handleAddToTab}
           />
-          <AddCircleOutlineIcon
-            className="addIcon"
-            onClick={handleViewDrinks}
+          <RemoveIcon
+            className="removeIcon"
+            onClick={handleRemoveFromTab}
           />
         </div> 
       </div>

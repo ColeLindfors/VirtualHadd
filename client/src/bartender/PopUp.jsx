@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './PopUp.css';
 import * as Realm from 'realm-web';
 
@@ -6,8 +6,25 @@ import * as Realm from 'realm-web';
   * The PopUp component is a modal that allows the bartender to add or remove money from a customer's tab.
   * The popUpType is either "add" or "remove", which determines the functionality of the pop-up.
  */
-function PopUp({ customer, setSelectedCustomer, popUpType }) {
+function PopUp({ showPopUp, customer, popUpType }) {
 
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    /**
+     * Initializes the input value to the customer's tab depending on the popUpType
+     * and whether the customer has a tab.
+     */
+    function initializeInputValue() {
+      if (popUpType === "remove" && customer.tab > 0) {
+        setInputValue("$" + customer.tab.toFixed(2));
+      }
+      else {
+        setInputValue("");
+      }
+    }
+    initializeInputValue();
+  }, [popUpType, customer.tab]);
 
   /**
    * Handles changes to the input field value, ensuring that the input value is formatted correctly.
@@ -21,7 +38,6 @@ function PopUp({ customer, setSelectedCustomer, popUpType }) {
    * - Limits the input to two decimal places
    * 
    * @param {Object} event - The input change event.
-   * @returns {void}
    */
   const handleInputChange = (event) => {
     let value = event.target.value.replace(/^\$/, "");
@@ -44,12 +60,15 @@ function PopUp({ customer, setSelectedCustomer, popUpType }) {
         event.target.value = "$" + parts[0] + "." + parts[1];
       }
     }
+    setInputValue(event.target.value);
   };
 
-  
+  /**
+   * Handles the click event for the OK button.
+   * 
+   * Triggers the incrementTabById or decrementTabById database function depending on the popUpType.
+   */
   async function handleOKClick() {
-    console.log('OK clicked');
-    // update the customer's tab in the customers array
     const REALM_APP_ID = "application-0-gydmq";
     const app = new Realm.App({ id: REALM_APP_ID });
     const updateTab = async () => {
@@ -68,22 +87,27 @@ function PopUp({ customer, setSelectedCustomer, popUpType }) {
     } catch (error) {
       console.error(error);
     }
-    setSelectedCustomer(null);
+    showPopUp(null);
   };
+
+  /**
+   * Removes the dollar sign from the input value:
+   * - if input field loses focus
+   * - and the user did not enter a number
+   */
+  function handleBlur(event) {
+    if (event.target.value === "$") {
+      event.target.value = "";
+    }
+    setInputValue(event.target.value);
+  }
 
 
   const endsWithS = customer.firstName[customer.firstName.length - 1] === 's';
 
-  function removeAmount () {
-    if (customer.tab > 0) {
-      return customer.tab.toFixed(2);
-    } else {
-      return "0.00";
-    }
-  }
 
   return (
-    <div className="overlay" onClick={() => setSelectedCustomer(null)}>
+    <div className="overlay" onClick={() => showPopUp(null)}>
       <div 
         className="popupContainer"
         onClick={(event) => event.stopPropagation()} // Prevents clicks within the popup from closing the popup
@@ -95,16 +119,17 @@ function PopUp({ customer, setSelectedCustomer, popUpType }) {
             className="popupInput"
             inputMode="decimal" 
             placeholder="$0.00"
-            value={popUpType === "remove" ? "$" + customer.tab.toFixed(2) : ""}
+            value={inputValue}
             type="text"
             onChange={handleInputChange}
+            onBlur={handleBlur}
           />
           <h1> {popUpType === "remove" ? "From" : "To"} {customer.firstName}{endsWithS ? "'" : "'s"}</h1>
-          {(popUpType === "remove" ? <div className="currentBalanceDiv">${removeAmount()}</div> : null)}
+          {(popUpType === "remove" ? <div className="currentBalanceDiv">${customer.tab.toFixed(2)}</div> : null)}
           <h1>Tab</h1>
         </div>
         <div className="popupButtonsContainer">
-          <h3 className="cancelButton" onClick={() => setSelectedCustomer(null)}>Cancel</h3>
+          <h3 className="cancelButton" onClick={() => showPopUp(null)}>Cancel</h3>
           <h3 className="OKButton" onClick={() => handleOKClick()}>OK</h3>
         </div>
       </div>
