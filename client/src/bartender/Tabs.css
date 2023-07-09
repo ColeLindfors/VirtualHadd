@@ -1,24 +1,25 @@
+/* One tab list */
 .tabsContainer {
     list-style: none;
-    overflow-y: auto;
-    padding: 5px;
+    padding: 0;
     margin: 0;
 }
 
+/* Contains both tabs lists */
 .tabsWrapper {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    margin-bottom: 15px;
-
+    padding-bottom: 10px;
+    padding-inline: 12px;
 }
-/* # Subtext for the tabs (in a light gray color) */
+
+/* Subtext for the tabs (in a light gray color) */
 .tabsWrapper h2 {
     color: #999;
     margin: 0;
     font-size: 20px;
     font-weight: 600;
-    margin: 0;
-    padding: 0;
+    padding: 10px;
     align-self: center;
-}
+} 

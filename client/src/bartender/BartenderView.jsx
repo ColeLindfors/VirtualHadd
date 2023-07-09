@@ -13,7 +13,6 @@ function BartenderView() {
   const [customers, setCustomers] = useState([]);
   useEffect( () => {
     async function loginAndFetchTabs() {
-      console.log("loginAndFetchTabs ran");
       const REALM_APP_ID = "application-0-gydmq";
       const app = new Realm.App({ id: REALM_APP_ID });
       const credentials = Realm.Credentials.function({
@@ -22,7 +21,6 @@ function BartenderView() {
       });
       try {
         const user = await app.logIn(credentials);
-        console.log(app.currentUser);
         const allCustomers = await user.functions.getAllTabs();
         // map the database results to a more friendly format
         setCustomers(allCustomers.map((customer) => ({
@@ -40,7 +38,6 @@ function BartenderView() {
 
   useEffect(() => {
     async function maintainTabs() {
-      console.log("maintainTabs ran");
       const REALM_APP_ID = "application-0-gydmq";
       const app = new Realm.App({ id: REALM_APP_ID });
       // ! MUST INSERT A TRY BLOCK HERE TOO
@@ -79,7 +76,6 @@ function BartenderView() {
   //function to handle header click, setting active tab to the tab that was clicked
   const handleHeaderClick = (event) => {
     setActiveView(event.target.innerHTML);
-    console.log("setActiveView: ", activeView);
   };
 
   const handleSearchBarClick = () => {

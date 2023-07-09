@@ -8,8 +8,6 @@ import RemoveIcon from '@mui/icons-material/Remove';
 function CustomerTab({ customer, showPopUp }) {
 
   const handleAddToTab = () => {
-    // const amount = prompt('Enter amount to add to tab:', 0);
-    // TODO: Add amount to customer tab
     showPopUp(customer, 'add');
   };
 

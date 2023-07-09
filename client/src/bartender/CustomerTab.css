@@ -4,11 +4,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    margin: 10px;
+    margin-block: 5px;
     border: 1.5px solid lightgray;
     border-radius: 12px;
-    width: 90%;
-    max-width: 800px;
     height: 40px;
 }
   
@@ -19,7 +17,7 @@
     text-overflow: ellipsis;
     text-align: start;
     flex: 1 1 60%;
-    font-size: 5vw;
+    font-size: 19px;
     padding-right: 4px;
 }
 
@@ -46,7 +44,6 @@
 
 .addIcon, .removeIcon {
     padding: 3px;
-    font-size: 30px !important;
 }
   
 .addIcon {

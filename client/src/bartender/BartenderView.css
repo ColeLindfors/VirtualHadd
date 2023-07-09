@@ -4,7 +4,6 @@
     align-items: center;
     justify-content: space-around;
     padding-inline: 10%;
-    /* padding-top: 4%; */
 }
 
 .headers h1 {
@@ -22,10 +21,11 @@
     align-items: center;
     background-color: #f2f2f2;
     padding: 5px;
-    margin-inline: 4%;
     border-radius: 7px;
     border: 1px solid #ccc; /* add a slight gray border */
     box-sizing: border-box;
+    margin-inline: 12px;
+    margin-block: 2px;
 }
   
 .searchBar input {
@@ -42,5 +42,10 @@
   
 .searchIcon {
     color: black;
+}
+.bartenderViewContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
