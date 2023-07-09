@@ -24,6 +24,12 @@ function PopUp({ showPopUp, customer, popUpType }) {
       }
     }
     initializeInputValue();
+
+    // Automatically focus on the input field if the popUpType is "add"
+    if (popUpType === "add") {
+      document.querySelector(".popupInput").focus();
+    }
+    
   }, [popUpType, customer.tab]);
 
   /**
@@ -74,19 +80,20 @@ function PopUp({ showPopUp, customer, popUpType }) {
     const updateTab = async () => {
       const amount = document.querySelector(".popupInput").value.substring(1);
       if (popUpType === "add") {
-        app.currentUser.functions.incrementTabById({userId: customer.id, amount: parseFloat(amount)});
+        await app.currentUser.functions.incrementTabById({userId: customer.id, amount: parseFloat(amount)});
       } else if (popUpType === "remove") {
-        app.currentUser.functions.decrementTabById({userId: customer.id, amount: parseFloat(amount)});
+        await app.currentUser.functions.decrementTabById({userId: customer.id, amount: parseFloat(amount)});
       }
       else {
         console.error("Invalid popUpType");
       }
     };
-    try {
-      updateTab();
-    } catch (error) {
+    const updateTabPromise = updateTab();
+    updateTabPromise.then(() => {
+      // TODO: Add a success message, hopefully with a nice animation
+    }).catch((error) => {
       console.error(error);
-    }
+    });
     showPopUp(null);
   };
 
@@ -107,7 +114,7 @@ function PopUp({ showPopUp, customer, popUpType }) {
 
 
   return (
-    <div className="overlay" onClick={() => showPopUp(null)}>
+    <div className="overlay" onClick={() => showPopUp(null)} >
       <div 
         className="popupContainer"
         onClick={(event) => event.stopPropagation()} // Prevents clicks within the popup from closing the popup
