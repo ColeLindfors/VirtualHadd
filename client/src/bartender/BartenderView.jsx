@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import * as Realm from 'realm-web';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../contexts/user.context';
 import Tabs from './Tabs';
 import './BartenderView.css';
 import SearchIcon from '@mui/icons-material/Search';
@@ -8,19 +8,12 @@ function BartenderView() {
 
   const [activeView, setActiveView] = useState('Tabs');
   const [searchTerm, setSearchTerm] = useState('');
-
-  // TODO: ALL THIS MUST BE ABSTRACTED TO A SPEPARATE LOGIN SECTION, THIS IS JUST FOR TESTING
   const [customers, setCustomers] = useState([]);
+  const { user } = useContext(UserContext);
+
   useEffect( () => {
-    async function loginAndFetchTabs() {
-      const REALM_APP_ID = "application-0-gydmq";
-      const app = new Realm.App({ id: REALM_APP_ID });
-      const credentials = Realm.Credentials.function({
-        username: "ColeLindfors",
-        password: "defaultpassword"
-      });
+    async function fetchTabs() {
       try {
-        const user = await app.logIn(credentials);
         const allCustomers = await user.functions.getAllTabs();
         // map the database results to a more friendly format
         setCustomers(allCustomers.map((customer) => ({
@@ -30,21 +23,16 @@ function BartenderView() {
           tab: parseFloat(customer.tab_balance),
         })));
       } catch (error) {
-        console.error("Failed to log in", error);
+        console.error("Failed to fetch tabs: ", error);
       }
     }
-    loginAndFetchTabs();
-  }, []);
+    fetchTabs();
+  }, [user]);
 
   useEffect(() => {
     async function maintainTabs() {
-      const REALM_APP_ID = "application-0-gydmq";
-      const app = new Realm.App({ id: REALM_APP_ID });
-      // ! MUST INSERT A TRY BLOCK HERE TOO
       // Connect to the database
-      const  mongodb = app.currentUser.mongoClient("mongodb-atlas");
-      const  collection = mongodb.db("VirtualHaddDB").collection("users");
-      
+      const collection = user.mongoClient("mongodb-atlas").db("VirtualHaddDB").collection("users");
       // Everytime a change happens in the stream, update the tab balance
       for await (const change of collection.watch()) {
         // * Possible optimization: keep track of the last change that occured and only update if the change is different
@@ -65,7 +53,7 @@ function BartenderView() {
       }
     }
     maintainTabs();
-  }, []);
+  }, [user]);
 
 
 
