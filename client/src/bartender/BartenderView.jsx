@@ -49,7 +49,6 @@ function BartenderView() {
             );
           });
         }
-        
       }
     }
     maintainTabs();

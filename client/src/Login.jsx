@@ -1,10 +1,19 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "./contexts/user.context";
+import './Login.css';
+import beerLogo from './static/beerLogo.png';
 
 function Login () {
+
+  const [form, setForm] = useState({
+    username: "",
+    password: ""
+  });
   const navigate = useNavigate();
   const location = useLocation();
+  const usernameInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
 
   // We are consuming our user-management context to 
   // get & set the user details here
@@ -31,12 +40,7 @@ function Login () {
     loadUser(); 
   }, []);
 
-  // We are using React's "useState" hook to keep track
-  //  of the form values.
-  const [form, setForm] = useState({
-    username: "",
-    password: ""
-  });
+
 
   // This function will be called whenever the user edits the form.
   function onFormInputChange (event) {
@@ -51,8 +55,20 @@ function Login () {
     navigate(redirectTo ? redirectTo : "/");
   }
 
+  function handleKeyDown(event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); // prevent the default form submission behavior
+      if (event.target.name === "username") {
+        passwordInputRef.current.focus();
+      } else if (event.target.name === "password") {
+        onSubmit(event);
+      }
+    }
+  }
 
-
+  function handleForgetPasswordClick() {
+    alert("If you are a Lodger - Cole for login help! Otherwise, this is not for you."); // Call the alert function inside the event handler
+  }
 
   // This function gets fired when the user clicks on the "Login" button.
   async function onSubmit (event) {
@@ -65,29 +81,53 @@ function Login () {
       if (user) {
         redirectNow();
       }
+      else {
+        alert("Invalid username or password");
+        setForm({ username: "", password: "" });
+        passwordInputRef.current.blur();
+      }
     } catch (error) {
-      alert(error)
+      console.log(error);
     }
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <input 
-        type="text"
-        name="username"
-        placeholder="Username"
-        value={form.username}
-        onChange={onFormInputChange}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={form.password}
-        onChange={onFormInputChange}
-      />
-      <button type="submit">Login</button>
-    </form>
+    <div className="login">
+      <div className="login-header">
+        <h1>Hadd</h1>
+        <img src={beerLogo} alt="logo"/>
+        <h1>Bar</h1>
+      </div>
+      <h2>Login</h2>
+      <form onSubmit={onSubmit}>
+        <div className="input-container">
+          <input
+            className="username-input"
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={form.username}
+            onChange={onFormInputChange}
+            onKeyDown={handleKeyDown}
+            ref={usernameInputRef}
+          />
+          <input
+            className="password-input"
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={onFormInputChange}
+            onKeyDown={handleKeyDown}
+            ref={passwordInputRef}
+            autoComplete="current-password"
+            inputmode="search"
+          />
+        <p onClick={handleForgetPasswordClick}>Forget Your Password?</p>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </div>
   );
 };
 
