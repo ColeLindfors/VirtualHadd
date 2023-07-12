@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { UserContext } from "./contexts/user.context";
+import { UserContext } from "../contexts/user.context";
 import './Login.css';
-import beerLogo from './static/beerLogo.png';
+import Beer from './beer-animation/Beer';
 
 function Login () {
 
@@ -14,14 +14,12 @@ function Login () {
   const location = useLocation();
   const usernameInputRef = useRef(null);
   const passwordInputRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // We are consuming our user-management context to 
   // get & set the user details here
   const { user, fetchUser, loginUser } = useContext(UserContext);
 
-    // This useEffect will run only once when the component is mounted.
-  // Hence this is helping us in verifying whether the user is already logged in
-  // or not.
   useEffect(() => {
     // Since there can be chances that the user is already logged in
     // but whenever the app gets refreshed the user context will become
@@ -36,11 +34,18 @@ function Login () {
           redirectNow();
         }
       }
+      setIsLoading(false);
     }
     loadUser(); 
   }, []);
 
-
+  // CSS background logic (due to the beer pouring animation)
+  useEffect(() => {
+    document.body.classList.add("login-body");
+    return () => {
+      document.body.classList.remove("login-body");
+    };
+  }, []);
 
   // This function will be called whenever the user edits the form.
   function onFormInputChange (event) {
@@ -67,7 +72,7 @@ function Login () {
   }
 
   function handleForgetPasswordClick() {
-    alert("If you are a Lodger - Cole for login help! Otherwise, this is not for you."); // Call the alert function inside the event handler
+    alert("If you are a Lodger - Contact Cole for login help! Otherwise, this is not for you."); // Call the alert function inside the event handler
   }
 
   // This function gets fired when the user clicks on the "Login" button.
@@ -94,11 +99,12 @@ function Login () {
   return (
     <div className="login">
       <div className="login-header">
-        <h1>Hadd</h1>
-        <img src={beerLogo} alt="logo"/>
-        <h1>Bar</h1>
+        <div className='.login-header-text'>
+          <h1>Hadd</h1>
+          <h1>Bar</h1>
+        </div>
+        <Beer/>
       </div>
-      <h2>Login</h2>
       <form onSubmit={onSubmit}>
         <div className="input-container">
           <input
@@ -121,7 +127,7 @@ function Login () {
             onKeyDown={handleKeyDown}
             ref={passwordInputRef}
             autoComplete="current-password"
-            inputmode="search"
+            inputMode="search"
           />
         <p onClick={handleForgetPasswordClick}>Forget Your Password?</p>
         </div>

@@ -1,3 +1,7 @@
+.login-body {
+  background-color: #C8F0A1;
+}
+
 .login {
     display: flex;
     flex-direction: column;
@@ -11,21 +15,22 @@
   font-size: 75px;
   letter-spacing: -0.05em;
   color: #2C936E;
-  margin-block-end: 50px;
+  margin-block: 0;
+  width: 210px;
 }
 
 .login-header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  margin-block-start: 20px;
 }
 
-.login-header img {
-  width: 58px;
-  height: 57px;
-  margin-inline: -7px;
+.login-header-text {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
 }
 
 .login h2 {
@@ -75,7 +80,7 @@
 }
 
 .login form button {
-  margin-top: 40px;
+  margin-top: 20px;
   width: 275px;
   height: 50px;
   border-radius: 20px;

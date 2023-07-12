@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { UserContext } from './contexts/user.context'
 import BartenderView from './bartender/BartenderView'
-import Login from './Login'
+import Login from './login/Login'
 import PrivateRoute from './PrivateRoute'
 import './Home.css';
 
