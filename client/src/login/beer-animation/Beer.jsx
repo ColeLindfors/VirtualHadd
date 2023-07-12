@@ -19,8 +19,6 @@ export default function Beer() {
         setIsPouring(false);
         // setIsFilling(false);
       }, 1500);
-      setTimeout(() => {
-      }, 2500);
     };
 
     const timer = setTimeout(() => {
