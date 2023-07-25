@@ -5,7 +5,7 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
     return (
         <div className='menu-headers'>
             <Link to="/">
-                <h1 id="menu" className={activeTab === 'menu' ? 'active' : ''}>
+                <h1 id="menu" className={activeTab === 'menu' ? 'active-header' : ''}>
                     Menu
                 </h1>
             </Link>
@@ -13,7 +13,7 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
                 <Link to="/payments">
                 <span 
                     id='payments' 
-                    className={`material-symbols-outlined ${activeTab === 'payments' ? 'active' : ''}`}
+                    className={`material-symbols-outlined ${activeTab === 'payments' ? 'active-header' : ''}`}
                 >
                     payments
                 </span>
@@ -21,7 +21,7 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
                 <Link to="/statistics">
                 <span 
                     id='statistics' 
-                    className={`material-symbols-outlined ${activeTab === 'statistics' ? 'active' : ''}`}
+                    className={`material-symbols-outlined ${activeTab === 'statistics' ? 'active-header' : ''}`}
                 >
                     query_stats
                 </span>
@@ -29,13 +29,13 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
                 <Link to="/settings">
                 <span 
                     id='settings' 
-                    className={`material-symbols-outlined ${activeTab === 'settings' ? 'active' : ''}`}
+                    className={`material-symbols-outlined ${activeTab === 'settings' ? 'active-header' : ''}`}
                 >
                     settings
                 </span>
                 </Link>
                 <Link to="/cart">
-                    <span id="shoppingCart" className={`material-symbols-outlined ${activeTab === 'shoppingCart' ? 'active' : ''}`}>
+                    <span id="shoppingCart" className={`material-symbols-outlined ${activeTab === 'shoppingCart' ? 'active-header' : ''}`}>
                         {!isCartEmpty && <div className="cartFilledIcon"></div>}
                         shopping_cart
                     </span>

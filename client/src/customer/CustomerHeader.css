@@ -49,6 +49,6 @@ a {
 	box-shadow: 0px 3px 4px 0px rgba(255, 37, 92, 0.30);
 }
 
-.active {
+.active-header {
     color: black !important;
 }
