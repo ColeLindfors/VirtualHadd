@@ -1,0 +1,340 @@
+[
+    {
+        "name": "Moscow Mule",
+        "price": 2.50,
+        "liquors": ["vodka"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/JnVr5yB/moscow-Mule.png",
+        "description": "Vodka mixed with ginger beer and served with a lime wedge",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "vodka",
+            "ginger beer",
+            "lime"
+        ]
+    },
+
+    {
+        "name": "Vodka Sprite",
+        "price": 2.00,
+        "liquors": ["vodka"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/9wWX8RN/vodka-Sprite.png",
+        "description": "Vodka mixed with sprite",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "vodka",
+            "sprite"
+        ]
+    },
+    
+    {
+        "name": "Vodka Cranberry",
+        "price": 2.00,
+        "liquors": ["vodka"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/Np8PKC2/vodka-Cranberry.png",
+        "description": "Vodka mixed with cranberry juice",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "vodka",
+            "cranberry juice"
+        ]
+    },
+    
+    {
+        "name": "Vodka Soda",
+        "price": 1.00,
+        "liquors": ["vodka"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/7jLQpWY/vodka-Soda.png",
+        "description": "Vodka mixed with soda water and served with a lime wedge",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "vodka",
+            "soda water",
+            "lime"
+        ]
+    },
+    
+    {
+        "name": "Vodka Tonic",
+        "price": 1.00,
+        "liquors": ["vodka"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/F6nWPjk/vodka-Tonic.png",
+        "description": "Vodka mixed with tonic water and served with a lime wedge",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "vodka",
+            "tonic water",
+            "lime"
+        ]
+    },
+    
+    {
+        "name": "Vodka Lemonade",
+        "price": 1.50,
+        "liquors": ["vodka"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/GkVQCjX/vodka-Lemonade.png",
+        "description": "Vodka mixed with lemonade",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "vodka",
+            "lemonade"
+        ]
+    },
+
+    {
+        "name": "Tequila Lemonade",
+        "price": 2.00,
+        "liquors": ["tequila"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/VYnz230/tequila-Lemonade.png",
+        "description": "Tequila mixed with lemonade",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "tequila",
+            "lemonade"
+        ]
+    },
+    
+    {
+        "name": "Rum and Coke",
+        "price": 2.00,
+        "liquors": ["rum"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/6Y19rVM/rum-And-Coke.png",
+        "description": "Rum mixed with coke",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "rum",
+            "coke"
+        ]
+    },
+    
+    {
+        "name": "Cuba Libre",
+        "price": 2.00,
+        "liquors": ["rum"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/hHs37VJ/cuba-Libre.png",
+        "description": "Rum mixed with coke and served with a lime wedge",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "rum",
+            "coke",
+            "lime"
+        ]
+    },
+    
+    {
+        "name": "Tequila Sunrise",
+        "price": 2.50,
+        "liquors": ["tequila"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/2kH0Fzr/tequila-Sunrise.png",
+        "description": "Tequila mixed with orange juice and grenadine",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "tequila",
+            "orange juice",
+            "grenadine "
+        ]
+    },
+    
+    {
+        "name": "Vodka Rob",
+        "price": 2.00,
+        "liquors": ["vodka"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/808fzSm/vodkaRob.png",
+        "description": "Vodka mixed with lemonade and grenadine",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "vodka",
+            "lemonade",
+            "grenadine"
+        ]
+    },
+    
+    {
+        "name": "E.T.",
+        "price": 4.00,
+        "liquors": ["rum"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/hy6Hxwy/et.png",
+        "description": "Double shot 100-proof rum mixed with coke and grenadine",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "rum",
+            "coke",
+            "grenadine"
+    
+        ]
+    },
+    
+    {
+        "name": "Maxi Pad",
+        "price": 2.50,
+        "liquors": ["vodka"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/tKBVN5z/maxiPad.png",
+        "description": "Vodka mixed with lemonade, sprite, and grenadine",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "vodka",
+            "lemonade",
+            "sprite",
+            "grenadine"
+    
+      ]
+    },
+    
+    {
+        "name": "Vodka Lebron",
+        "price": 2.50,
+        "liquors": ["vodka"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/1zx8670/vodka-Lebron.png",
+        "description": "Vodka mixed with sprite cranberry",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "vodka",
+            "sprite cranberry"
+      ]
+    },
+    
+    {
+        "name": "Dark and Strappy",
+        "price": 2.50,
+        "liquors": ["rum"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/Yth9m3T/dark-And-Strappy.png",
+        "description": "Rum mixed with ginger beer",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "rum",
+            "ginger beer"
+    
+      ]
+    },
+    
+    {
+        "name": "Dart",
+        "price": 2.50,
+        "liquors": ["whiskey"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/XJmf4M1/dart.png",
+        "description": "Whiskey mixed with ginger beer",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "whiskey",
+            "ginger beer"
+        ]
+    },
+
+    {
+        "name": "Gart",
+        "price": 2.00,
+        "liquors": ["whiskey"],
+        "variety": "mixed",
+        "image": "https://i.ibb.co/HTF8G35/gart.png",
+        "description": "Whiskey mixed with lemonade",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": [
+            "whiskey",
+            "lemonade"
+        ]
+    },
+    
+    {
+        "name": "Vodka Shot",
+        "price": 1.00,
+        "liquors": ["vodka"],
+        "variety": "shots",
+        "image": "https://i.ibb.co/pK1H24F/vodka-Shot.png",
+        "description": "Our finest Vodka shot",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": ["vodka"]
+    },
+    
+    {
+        "name": "Tequila Shot",
+        "price": 1.00,
+        "liquors": ["tequila"],
+        "variety": "shots",
+        "image": "https://i.ibb.co/PxkpFjc/tequila-Shot.png",
+        "description": "Our finest Tequila shot",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": ["tequila"]
+    },
+    
+    {
+        "name": "Whiskey Shot",
+        "price": 1.00,
+        "liquors": ["whiskey"],
+        "variety": "shots",
+        "image": "https://i.ibb.co/Bs5xzWX/whiskey-Shot.png",
+        "description": "Our finest Whiskey shot",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": ["whiskey"]
+    },
+    
+    {
+        "name": "Rum Shot",
+        "price": 1.00,
+        "liquors": ["rum"],
+        "variety": "shots",
+        "image": "https://i.ibb.co/xDh3Cwf/rumShot.png",
+        "description": "Our finest Rum shot",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": ["rum"]
+    },
+    
+    {
+        "name": "Beer (12oz)",
+        "price": 1.00,
+        "liquors": ["other"],
+        "variety": "beer",
+        "image": "https://i.ibb.co/kxFzRBT/short-Beer.png",
+        "description": "Our finest beer",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": ["beer"]
+    },
+    
+    {
+        "name": "Beer (16oz)",
+        "price": 1.50,
+        "liquors": ["other"],
+        "variety": "beer",
+        "image": "https://i.ibb.co/2KhXSxv/tallBeer.png",
+        "description": "Our finest tall boy",
+        "soldOut": false,
+        "isVisible": true,
+        "ingredients": ["beer"]
+    }
+]

@@ -1,13 +1,12 @@
-import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import CustomerHeader from './CustomerHeader';
+import './CustomerCart.css';
 
 function CustomerCart () {
-  return (
-    <div>
-      <Link to="/">Home</Link>
-      <h1>Customer Cart</h1>
-    </div>
-  )
-}
+	return (
+		<div className='cart-container'>
+			<CustomerHeader activeTab={'shoppingCart'}></CustomerHeader>
+		</div>
+	)
+};
 
-export default CustomerCart
+export default CustomerCart;

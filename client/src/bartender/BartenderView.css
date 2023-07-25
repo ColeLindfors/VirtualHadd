@@ -16,33 +16,6 @@
     font-size: 36px;
 }
 
-.searchBar {
-    display: flex;
-    align-items: center;
-    background-color: #f2f2f2;
-    padding: 5px;
-    border-radius: 7px;
-    border: 1px solid #ccc; /* add a slight gray border */
-    box-sizing: border-box;
-    margin-inline: 12px;
-    margin-block: 2px;
-}
-  
-.searchBar input {
-    border: none;
-    outline: none;
-    margin-left: 5px;
-    font-size: 16px;
-    background-color: transparent;
-}
-
-.searchBar:focus-within {
-    box-shadow: 0 0 5px #d9b3ff;
-}
-  
-.searchIcon {
-    color: black;
-}
 .bartenderViewContainer {
     display: flex;
     flex-direction: column;
