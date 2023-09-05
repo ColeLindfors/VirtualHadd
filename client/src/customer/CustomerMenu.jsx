@@ -25,6 +25,9 @@ function CustomerMenu () {
 				var newLiquorOptions = [];
 				var newVarietyOptions = [];
 				for (const drink of fetchedDrinks) {
+					if (!drink.isVisible) { // skip drinks that are not visible
+						continue;
+					}
 					newDrinks.push({
 						id: drink._id.toString(),
 						name: drink.name,

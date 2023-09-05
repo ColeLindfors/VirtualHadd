@@ -1,7 +1,5 @@
 import React from 'react';
 import './CustomerTab.css';
-// import SportsBarIcon from '@mui/icons-material/SportsBar';
-// import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 

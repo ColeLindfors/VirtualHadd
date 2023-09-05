@@ -36,3 +36,8 @@
   font-size: 25px;
   padding-inline: 5px;
 }
+
+/* Remove native(?) search icon in Safari */
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance:none;
+}
