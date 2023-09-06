@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/user.context";
 import './Login.css';
 import Beer from './beer-animation/Beer';
@@ -14,7 +14,6 @@ function Login () {
   const location = useLocation();
   const usernameInputRef = useRef(null);
   const passwordInputRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   // We are consuming our user-management context to 
   // get & set the user details here
@@ -34,9 +33,9 @@ function Login () {
           redirectNow();
         }
       }
-      setIsLoading(false);
     }
     loadUser(); 
+    // eslint-disable-next-line
   }, []);
 
   // CSS background logic (due to the beer pouring animation)
@@ -73,6 +72,22 @@ function Login () {
 
   function handleForgetPasswordClick() {
     alert("If you are a Lodger - Contact Cole for login help! Otherwise, this is not for you."); // Call the alert function inside the event handler
+  }
+
+  async function handleGuestLogin (event) {
+    event.preventDefault();
+    try {
+      const user = await loginUser('guestFirstNameguestLastName', 'guestPassword');
+      if (user) {
+        redirectNow();
+      }
+      else {
+        alert('Error logging in as a guest');
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
   // This function gets fired when the user clicks on the "Login" button.
@@ -131,7 +146,12 @@ function Login () {
           />
         <p onClick={handleForgetPasswordClick}>Forget Your Password?</p>
         </div>
-        <button type="submit">Login</button>
+        <button id='login-button' type="submit">Login</button>
+        <button 
+          id='guest-login-button' 
+          type="button"
+          onClick={handleGuestLogin}
+        >Login as a Guest</button>
       </form>
     </div>
   );

@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/user.context';
-import CustomerHeader from './CustomerHeader';
+import CustomerHeader from '../customer/CustomerHeader';
 import SearchBar from './SearchBar';
 import Drinks from './Drinks';
-import './CustomerMenu.css';
+import './Menu.css';
 
 
-function CustomerMenu () {
+function Menu () {
 	const [variety, setVariety] = useState('all_varieties');
 	const [liquor, setLiquor] = useState('all_liquors');
 	const [searchTerm, setSearchTerm] = useState('');
@@ -118,4 +118,4 @@ function CustomerMenu () {
 	)
 }
 
-export default CustomerMenu;
+export default Menu;

@@ -24,7 +24,6 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-block-start: 20px;
 }
 
 .login-header-text {
@@ -80,14 +79,23 @@
 }
 
 .login form button {
-  margin-top: 20px;
+  margin-top: 15px;
   width: 275px;
   height: 50px;
   border-radius: 20px;
-  background-color: #2C936E;
   color: white;
   font-size: 20px;
   font-weight: 400;
   box-shadow: none;
   border: none;
 }
+
+.login form button#login-button {
+  background-color: #2C936E;
+}
+
+.login form button#guest-login-button {
+  background-color: #AAAAAA;
+  margin-bottom: 20px;
+}
+

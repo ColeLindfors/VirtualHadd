@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { UserContext } from './contexts/user.context'
 import BartenderView from './bartender/BartenderView'
-import CustomerMenu from './customer/CustomerMenu'
+import Menu from './menu/Menu'
 import CustomerCart from './customer/CustomerCart'
 import Login from './login/Login'
 import PrivateRoute from './PrivateRoute'
@@ -26,7 +26,7 @@ function Home() {
     } else {
       return (
         <>
-          <Route path="/" element={<CustomerMenu />} />
+          <Route path="/" element={<Menu />} />
           <Route path ="/cart" element={<CustomerCart />} />
         </>
       )
