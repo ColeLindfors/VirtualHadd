@@ -10,7 +10,8 @@ function Drink ({ drink, setCart, cart }) {
                 <p>{drink.description}</p>
                 <div className='drink-info-bottom'>
                     <h2>${drink.price.toFixed(2)}</h2>
-                    <div className='drink-info-bottom-right'>
+                    {/* Plus button commented out until shopping cart added! */}
+                    {/* <div className='drink-info-bottom-right'>
                         {
                             cart[drink.id] 
                             ?
@@ -21,7 +22,7 @@ function Drink ({ drink, setCart, cart }) {
                             : <></>
                         }
                         <span className='material-symbols-outlined add-to-cart-icon'>add</span>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
