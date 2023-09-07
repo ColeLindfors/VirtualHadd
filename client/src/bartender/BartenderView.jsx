@@ -16,11 +16,13 @@ function BartenderView() {
       try {
         const allCustomers = await user.functions.getAllTabs();
         // map the database results to a more friendly format
-        setCustomers(allCustomers.map((customer) => ({
-          id: customer._id.toString(),
-          firstName: customer.first_name,
-          lastName: customer.last_name,
-          tab: parseFloat(customer.tab_balance),
+        setCustomers(allCustomers
+          .filter((customer) => customer.first_name !== 'guestFirstName')
+          .map((customer) => ({
+            id: customer._id.toString(),
+            firstName: customer.first_name,
+            lastName: customer.last_name,
+            tab: parseFloat(customer.tab_balance),
         })));
       } catch (error) {
         console.error("Failed to fetch tabs: ", error);
