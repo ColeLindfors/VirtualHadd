@@ -8,7 +8,6 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
     const {logoutUser} = useContext(UserContext);
 
     const handleLogout = () => {
-        console.log('logout clicked!')
         if (window.confirm('Logout?')) {
             logoutUser();
         }
@@ -20,17 +19,16 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
 
 
     return (
-        <div className='menu-headers'>
+        <div className='customer-headers'>
             <Link to="/">
-                <h1 id="menu" className={activeTab === 'menu' ? 'active-header' : ''}>
+                <h1 className={activeTab === 'menu' ? 'active-header' : ''}>
                     Menu
                 </h1>
             </Link>
-            <div className='menu-header-buttons'>
+            <div className='customer-header-buttons'>
                 {/* <Link to="/payments"> */}
                 <span 
                     onClick={handleNotImplementedRedirect} // ! Remove this line when payments is implemented
-                    id='payments' 
                     className={`material-symbols-outlined ${activeTab === 'payments' ? 'active-header' : ''}`}
                 >
                     payments
@@ -39,7 +37,6 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
                 {/* <Link to="/statistics"> */}
                 <span 
                     onClick={handleNotImplementedRedirect} // ! Remove this line when statistics are implemented
-                    id='statistics' 
                     className={`material-symbols-outlined ${activeTab === 'statistics' ? 'active-header' : ''}`}
                 >
                     query_stats
@@ -48,7 +45,6 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
                 {/* <Link to="/cart"> */}
                     <span 
                         onClick={handleNotImplementedRedirect} // ! Remove this line when shopping cart is implemented
-                        id="shoppingCart" 
                         className={`material-symbols-outlined ${activeTab === 'shoppingCart' ? 'active-header' : ''}`}>
                         {!isCartEmpty && <div className="cartFilledIcon"></div>}
                         shopping_cart

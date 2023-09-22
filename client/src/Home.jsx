@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { UserContext } from './contexts/user.context'
-import BartenderView from './bartender/BartenderView'
+import TabsView from './bartender/TabsView'
 import Menu from './menu/Menu'
 import CustomerCart from './customer/CustomerCart'
 import Login from './login/Login'
@@ -20,7 +20,8 @@ function Home() {
     if (user?.customData?.role === 'bartender') {
       return (
         <>
-          <Route path="/" element={<BartenderView />} />
+          <Route path="/" element={<TabsView />} />
+          <Route path="/menu" element={<Menu />} />
         </>
       )
     } else {
@@ -28,6 +29,7 @@ function Home() {
         <>
           <Route path="/" element={<Menu />} />
           <Route path ="/cart" element={<CustomerCart />} />
+          <Route path="/menu" element={<Menu />} />
         </>
       )
     }

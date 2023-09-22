@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/user.context';
 import CustomerHeader from '../customer/CustomerHeader';
+import BartenderHeader from '../bartender/BartenderHeader';
 import SearchBar from './SearchBar';
 import Drinks from './Drinks';
 import './Menu.css';
@@ -25,7 +26,7 @@ function Menu () {
 				var newLiquorOptions = [];
 				var newVarietyOptions = [];
 				for (const drink of fetchedDrinks) {
-					if (!drink.isVisible) { // skip drinks that are not visible
+					if (!drink.isVisible && user.customData.role !== 'bartender') { // skip drinks that are not visible for customers and guests
 						continue;
 					}
 					newDrinks.push({
@@ -56,7 +57,7 @@ function Menu () {
 			}
 		}
 		fetchDrinks();
-	  }, [user, drinks]);
+	  }, [user]);
 
 	const handleVarietyChange = (event) => {
 		setVariety(event.target.value);
@@ -72,7 +73,10 @@ function Menu () {
 
 	return (
 		<div className='menu-container'>
-			<CustomerHeader isCartEmpty={isEmpty(cart)} activeTab='menu'/>
+			{user.customData.role === 'bartender'
+				? <BartenderHeader activeTab='menu'/> // Bartender case
+				: <CustomerHeader isCartEmpty={isEmpty(cart)} activeTab='menu'/> // Customer and Guest case
+			}
 			<div className='menu-selectors'>
 				<div className={`selector-wrapper ${variety !== 'all_varieties' ? 'selected' : ''}`} >
 					<select 
@@ -113,6 +117,7 @@ function Menu () {
 			liquor={liquor}
 			cart={cart}
 			setCart={setCart}
+			userRole={user.customData.role}
 			/>
 		</div>
 	)

@@ -75,7 +75,7 @@
     font-weight: 600;
 }
 
-.drink-info-bottom-right .material-symbols-outlined {
+.drink-info-bottom-right.customer .material-symbols-outlined {
     font-size: 28px;
     font-weight: 800;
     color: #FF255C;
@@ -86,3 +86,7 @@
         'opsz' 48;
 }   
 
+.drink-info-bottom-right.bartender .material-symbols-outlined {
+	font-size: 35px;
+    color: #646464;
+}

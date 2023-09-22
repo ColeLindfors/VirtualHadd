@@ -1,5 +1,5 @@
 
-.menu-headers {
+.customer-headers {
     display: flex;
     flex-direction: row;
 	align-items: center;
@@ -10,7 +10,7 @@
 	padding-top: 30px;
 }
 
-.menu-header-buttons {
+.customer-header-buttons {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -30,7 +30,7 @@ a {
     text-decoration: none;
 }
 
-.menu-header-buttons .material-symbols-outlined {
+.customer-header-buttons .material-symbols-outlined {
 	font-size: 35px;
 	padding-inline: 5px;
 	color: #646464;

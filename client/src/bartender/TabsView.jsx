@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../contexts/user.context';
+import BartenderHeader from './BartenderHeader';
+import SearchBar from '../menu/SearchBar';
 import Tabs from './Tabs';
-import './BartenderView.css';
-import SearchIcon from '@mui/icons-material/Search';
+import './TabsView.css';
 
-function BartenderView() {
-
-  const [activeView, setActiveView] = useState('Tabs');
+function TabsView() {
   const [searchTerm, setSearchTerm] = useState('');
   const [customers, setCustomers] = useState([]);
   const { user } = useContext(UserContext);
@@ -56,54 +55,17 @@ function BartenderView() {
     maintainTabs();
   }, [user]);
 
-
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  //function to handle header click, setting active tab to the tab that was clicked
-  const handleHeaderClick = (event) => {
-    setActiveView(event.target.innerHTML);
-  };
-
-  const handleSearchBarClick = () => {
-    const input = document.querySelector('.searchBar input');
-    input.focus();
-  };
-
   return (
-    <div className="bartenderViewContainer">
-      <div className="headers">
-        <h1 
-          onClick={handleHeaderClick} 
-          className={activeView === 'Orders' ? 'active' : ''}
-        >
-          Orders
-        </h1>
-        <h1 
-          onClick={handleHeaderClick} 
-          className={activeView === 'Tabs' ? 'active' : ''}
-        >
-          Tabs
-        </h1>
-      </div>
-      <div className="searchBar" onClick={handleSearchBarClick}>
-        <SearchIcon 
-          className="searchIcon"
-          sx={{fontSize: 30}} 
-        />
-        <input
-          type="text"
-          autoCorrect="off"
-          value={searchTerm} 
-          onChange={handleSearch}
-          placeholder="Search for a Lodger..."
-        />
-      </div>
+    <div className="tabsViewContainer">
+      <BartenderHeader activeTab='tabs'/>
+      <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        placeholder="Search for a Lodger..."
+      />
       <Tabs customers={customers} searchTerm={searchTerm} />
     </div>
   );
 }
 
-export default BartenderView;
+export default TabsView;

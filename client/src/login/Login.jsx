@@ -71,7 +71,7 @@ function Login () {
   }
 
   function handleForgetPasswordClick() {
-    alert("If you are a Lodger - Contact Cole for login help! Otherwise, this is not for you."); // Call the alert function inside the event handler
+    alert("If you are a Lodger - Contact Cole for login help! Otherwise, login as a guest."); // Call the alert function inside the event handler
   }
 
   async function handleGuestLogin (event) {

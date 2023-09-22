@@ -1,9 +1,17 @@
 .headers {
+    width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    padding-block: 15px;
+	padding-top: 30px;
+}
+
+.text-headers {
+    display: flex;
     align-items: center;
     justify-content: space-around;
-    padding-inline: 10%;
+    width: 100%;
 }
 
 .headers h1 {
@@ -15,10 +23,3 @@
     color: black;
     font-size: 36px;
 }
-
-.bartenderViewContainer {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-

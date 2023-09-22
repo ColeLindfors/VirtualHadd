@@ -11,7 +11,6 @@ export function UserProvider({children}) {
 
     // Function to log in user into the VirtualHadd Database using their username & password
     async function loginUser (username, password) {
-        // TODO : Implement actual login with accounts
         const credentials = Credentials.function({
             username: username,
             password: password,
