@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import './AddRemovePopUp.css';
 import './PopUp.css';
 import * as Realm from 'realm-web';
 
@@ -6,7 +7,7 @@ import * as Realm from 'realm-web';
   * The PopUp component is a modal that allows the bartender to add or remove money from a customer's tab.
   * The popUpType is either "add" or "remove", which determines the functionality of the pop-up.
  */
-function PopUp({ showPopUp, customer, popUpType }) {
+function AddRemovePopUp({ showPopUp, customer, popUpType }) {
 
   const [inputValue, setInputValue] = useState("");
 
@@ -27,7 +28,7 @@ function PopUp({ showPopUp, customer, popUpType }) {
 
     // Automatically focus on the input field if the popUpType is "add"
     if (popUpType === "add") {
-      document.querySelector(".popupInput").focus();
+      document.querySelector(".largePopupInput").focus();
     }
     
   }, [popUpType, customer.tab]);
@@ -78,7 +79,7 @@ function PopUp({ showPopUp, customer, popUpType }) {
     const REALM_APP_ID = "application-0-gydmq";
     const app = new Realm.App({ id: REALM_APP_ID });
     const updateTab = async () => {
-      const amount = document.querySelector(".popupInput").value.substring(1);
+      const amount = inputValue.substring(1);
       if (popUpType === "add") {
         await app.currentUser.functions.incrementTabById({userId: customer.id, amount: parseFloat(amount)});
       } else if (popUpType === "remove") {
@@ -121,9 +122,8 @@ function PopUp({ showPopUp, customer, popUpType }) {
       >
         <div className="popupUpperContainer">
           <h1>{popUpType === "remove" ? "Remove" : "Add"}</h1>
-          {/* <h1>Add</h1> */}
           <input 
-            className="popupInput"
+            className="largePopupInput"
             inputMode="decimal" 
             placeholder="$0.00"
             value={inputValue}
@@ -137,11 +137,11 @@ function PopUp({ showPopUp, customer, popUpType }) {
         </div>
         <div className="popupButtonsContainer">
           <h3 className="cancelButton" onClick={() => showPopUp(null)}>Cancel</h3>
-          <h3 className="OKButton" onClick={() => handleOKClick()}>OK</h3>
+          <h3 className="AcceptButton" onClick={() => handleOKClick()}>OK</h3>
         </div>
       </div>
     </div>
   );
 }
 
-export default PopUp;
+export default AddRemovePopUp;

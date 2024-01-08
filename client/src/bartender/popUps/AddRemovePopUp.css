@@ -1,0 +1,10 @@
+.popupContainer .currentBalanceDiv {
+    font-size: 22px;
+    font-weight: 600;
+    display: inline-block;
+    background-color: #EAE8E8;
+    border-radius: 8px;
+    text-align: center;
+    padding-inline: 15px;
+    margin-block: 2px;
+}

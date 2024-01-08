@@ -37,18 +37,8 @@
     font-weight: 500;
     letter-spacing: -0.2px;
 }
-.popupContainer .currentBalanceDiv {
-    font-size: 22px;
-    font-weight: 600;
-    display: inline-block;
-    background-color: #EAE8E8;
-    border-radius: 8px;
-    text-align: center;
-    padding-inline: 15px;
-    margin-block: 2px;
-}
 
-.popupInput {
+.largePopupInput {
     box-sizing: border-box;
     display: flex;
     width: 75%;
@@ -60,7 +50,7 @@
     border-radius: 10px;
 }
 
-.popupInput:focus {
+.largePopupInput:focus {
     outline: none;
     outline-offset: -10px;
     border-color: #0078d7;
@@ -78,7 +68,7 @@
     margin: 0;
 }
 
-.popupButtonsContainer .OKButton {
+.popupButtonsContainer .AcceptButton {
     font-weight: 700;
 }
 

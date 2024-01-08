@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CustomerTab from './CustomerTab';
 import './Tabs.css';
-import PopUp from './PopUp';
+import PopUp from './popUps/PopUp';
 
 function Tabs({ customers, searchTerm }) {
 
