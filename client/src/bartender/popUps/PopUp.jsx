@@ -18,34 +18,6 @@ function PopUp({ showPopUp, customer, popUpType }) {
         <></>}
     </>
   )
-
-  //   <div className="overlay" onClick={() => showPopUp(null)} >
-  //     <div 
-  //       className="popupContainer"
-  //       onClick={(event) => event.stopPropagation()} // Prevents clicks within the popup from closing the popup
-  //     >
-  //       <div className="popupUpperContainer">
-  //         <h1>{popUpType === "remove" ? "Remove" : "Add"}</h1>
-  //         <input 
-  //           className="largePopupInput"
-  //           inputMode="decimal" 
-  //           placeholder="$0.00"
-  //           value={inputValue}
-  //           type="text"
-  //           onChange={handleInputChange}
-  //           onBlur={handleBlur}
-  //         />
-  //         <h1> {popUpType === "remove" ? "From" : "To"} {customer.firstName}{endsWithS ? "'" : "'s"}</h1>
-  //         {(popUpType === "remove" ? <div className="currentBalanceDiv">${customer.tab.toFixed(2)}</div> : null)}
-  //         <h1>Tab</h1>
-  //       </div>
-  //       <div className="popupButtonsContainer">
-  //         <h3 className="cancelButton" onClick={() => showPopUp(null)}>Cancel</h3>
-  //         <h3 className="AcceptButton" onClick={() => handleOKClick()}>OK</h3>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 }
 
 export default PopUp;

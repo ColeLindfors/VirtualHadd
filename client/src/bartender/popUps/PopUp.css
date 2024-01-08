@@ -16,8 +16,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 191px;
-    height: 212px;
     border-radius: 10px;
     z-index: 3;
     padding: 10px;
