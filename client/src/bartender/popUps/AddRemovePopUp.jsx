@@ -3,6 +3,7 @@ import './AddRemovePopUp.css';
 import './PopUp.css';
 import * as Realm from 'realm-web';
 
+// TODO: FIX addPopUp text spacing (spacing is too large rn)
 /**
   * The PopUp component is a modal that allows the bartender to add or remove money from a customer's tab.
   * The popUpType is either "add" or "remove", which determines the functionality of the pop-up.
@@ -116,13 +117,13 @@ function AddRemovePopUp({ showPopUp, customer, popUpType }) {
 
   return (
     <div className="overlay" onClick={() => showPopUp(null)} >
-        <div className="popUpFrame">
+        <div className={popUpType === "remove" ? "removePopupFrame" : "addPopupFrame"}>
             <div 
                 className="popupContainer"
                 onClick={(event) => event.stopPropagation()} // Prevents clicks within the popup from closing the popup
             >
                 <div className="popupUpperContainer">
-                <h1>{popUpType === "remove" ? "Remove" : "Add"}</h1>
+                <h2>{popUpType === "remove" ? "Remove" : "Add"}</h2>
                 <input 
                     className="largePopupInput"
                     inputMode="decimal" 
@@ -132,9 +133,9 @@ function AddRemovePopUp({ showPopUp, customer, popUpType }) {
                     onChange={handleInputChange}
                     onBlur={handleBlur}
                 />
-                <h1> {popUpType === "remove" ? "From" : "To"} {customer.firstName}{endsWithS ? "'" : "'s"}</h1>
+                <h2> {popUpType === "remove" ? "From" : "To"} {customer.firstName}{endsWithS ? "'" : "'s"}</h2>
                 {(popUpType === "remove" ? <div className="currentBalanceDiv">${customer.tab.toFixed(2)}</div> : null)}
-                <h1>Tab</h1>
+                <h2>Tab</h2>
                 </div>
                 <div className="popupButtonsContainer">
                 <h3 className="cancelButton" onClick={() => showPopUp(null)}>Cancel</h3>

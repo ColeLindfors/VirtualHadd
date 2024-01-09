@@ -22,6 +22,7 @@ function TabsView() {
             firstName: customer.first_name,
             lastName: customer.last_name,
             tab: parseFloat(customer.tab_balance),
+            venmo: customer.venmo,
         })));
       } catch (error) {
         console.error("Failed to fetch tabs: ", error);

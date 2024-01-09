@@ -9,7 +9,15 @@
     margin-block: 2px;
 }
 
-.popUpFrame {
+.popupFrame {
     width: 191px;
-    height: 212px;
+    height: 272px;
+}
+.removePopupFrame {
+    width: 191px;
+    height: 272px;
+}
+.addPopupFrame {
+    width: 191px;
+    height: 237px;
 }
