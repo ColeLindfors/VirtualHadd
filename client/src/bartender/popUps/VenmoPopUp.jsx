@@ -4,7 +4,7 @@ import './PopUp.css';
 import * as Realm from 'realm-web';
 
 /**
- * The PopUp component is a modal that allows a customer to enter their venmo username under their profile
+ * The PopUp component is a modal that allows a customer to enter their venmo username under their profil
  */
 function VenmoPopUp({ showPopUp, customer}) {
 
