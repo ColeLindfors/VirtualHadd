@@ -1,5 +1,6 @@
 import React from 'react';
 import AddRemovePopUp from './AddRemovePopUp';
+import VenmoPopUp from './VenmoPopUp';
 
 /**
   * PopUp is a wrapper component that determines which pop-up to show.
@@ -12,6 +13,11 @@ function PopUp({ showPopUp, customer, popUpType }) {
           showPopUp={showPopUp}
           customer={customer}
           popUpType = {popUpType}
+        />)
+        : popUpType === "venmo" ? (
+        <VenmoPopUp
+          showPopUp={showPopUp}
+          customer={customer}
         />)
         :
         <></>}

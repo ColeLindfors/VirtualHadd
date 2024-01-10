@@ -1,5 +1,5 @@
 import {createContext, useState} from 'react';
-import {App, Credentials, User} from 'realm-web';
+import {App, Credentials} from 'realm-web';
 
 // Creating a Realm App Instance
 const app = new App('application-0-gydmq');

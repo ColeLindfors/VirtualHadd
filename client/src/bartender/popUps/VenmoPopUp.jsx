@@ -64,14 +64,15 @@ function VenmoPopUp({ showPopUp, customer}) {
    * Updates the venmo username in the database.
    */
   async function handleOKClick() {
-    console.log('ok clicked')
     const REALM_APP_ID = "application-0-gydmq";
     const app = new Realm.App({ id: REALM_APP_ID });
-    const updateTab = async () => {
-        app.currentUser.functions.updateVenmo({userId: customer.id, venmo: inputValue}); // TODO: Backend Update Venmo Function not made yet
-    };
-    const updateTabPromise = updateTab();
-    updateTabPromise.then(() => {
+    const venmo = inputValue.substring(1);
+    const setVenmoPromise = app.currentUser.functions.setVenmo({userId: customer.id, venmoUsername: venmo}); // TODO: Backend Update Venmo Function not made yet
+    setVenmoPromise.then(result => {
+        const updatedVenmo = result;
+        if (updatedVenmo !== null) {
+            customer.venmo = updatedVenmo;
+        }
         // TODO: Add a success message, hopefully with a nice animation
     }).catch((error) => {
       console.error(error);

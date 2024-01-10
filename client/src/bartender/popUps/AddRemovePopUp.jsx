@@ -79,23 +79,30 @@ function AddRemovePopUp({ showPopUp, customer, popUpType }) {
   async function handleOKClick() {
     const REALM_APP_ID = "application-0-gydmq";
     const app = new Realm.App({ id: REALM_APP_ID });
-    const updateTab = async () => {
-      const amount = inputValue.substring(1);
-      if (popUpType === "add") {
-        await app.currentUser.functions.incrementTabById({userId: customer.id, amount: parseFloat(amount)});
-      } else if (popUpType === "remove") {
-        await app.currentUser.functions.decrementTabById({userId: customer.id, amount: parseFloat(amount)});
-      }
-      else {
-        console.error("Invalid popUpType");
-      }
-    };
-    const updateTabPromise = updateTab();
-    updateTabPromise.then(() => {
-      // TODO: Add a success message, hopefully with a nice animation
-    }).catch((error) => {
-      console.error(error);
-    });
+    const amount = inputValue.substring(1);
+    if (popUpType === "add") {
+        const incrementTabPromise = app.currentUser.functions.incrementTabById({userId: customer.id, amount: parseFloat(amount)});
+        incrementTabPromise.then(result => {
+            const updatedTabBalance = result;
+            if (updatedTabBalance !== null) {
+                customer.tab = parseFloat(updatedTabBalance);
+                // TODO: Add a success message, hopefully with a nice animation
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    } else if (popUpType === "remove") {
+        const decrementTabPromise = app.currentUser.functions.decrementTabById({userId: customer.id, amount: parseFloat(amount)});
+        decrementTabPromise.then(result => {
+            const updatedTabBalance = result;
+            if (updatedTabBalance !== null) {
+                customer.tab = parseFloat(updatedTabBalance);
+                // TODO: Add a success message, hopefully with a nice animation
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
     showPopUp(null);
   };
 

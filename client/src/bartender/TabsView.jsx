@@ -32,28 +32,57 @@ function TabsView() {
   }, [user]);
 
   useEffect(() => {
+    let isMaintainTabsRunning = false;
+    let client; // Store the client instance for reconnection
+    let changeStream; // Store the change stream for closure
+  
     async function maintainTabs() {
-      // Connect to the database
-      const collection = user.mongoClient("mongodb-atlas").db("VirtualHaddDB").collection("users");
-      // Everytime a change happens in the stream, update the tab balance
-      for await (const change of collection.watch()) {
-        // * Possible optimization: keep track of the last change that occured and only update if the change is different
-        if(change.operationType === 'update') {
-          const changedCustomerId = change.fullDocument._id.toString();
-          setCustomers(oldCustomers => {
-            return (
-              oldCustomers.map((customer) => {
-                if (customer.id === changedCustomerId) {
-                  customer.tab = parseFloat(change.fullDocument.tab_balance);
-                }
-                return customer;
-              })
-            );
-          });
+      isMaintainTabsRunning = true;
+  
+      try {
+        if (!client) {
+          client = user.mongoClient("mongodb-atlas"); // Create client if needed
         }
+  
+        const collection = client.db("VirtualHaddDB").collection("users");
+        changeStream = collection.watch(); // Start change stream
+  
+        for await (const change of changeStream) {
+          // * Possible optimization: keep track of the last change that occured and only update if the change is different
+          if(change.operationType === 'update') {
+            const changedCustomerId = change.fullDocument._id.toString();
+            setCustomers(oldCustomers => {
+              return (
+                oldCustomers.map((customer) => {
+                  if (customer.id === changedCustomerId) {
+                    customer.tab = parseFloat(change.fullDocument.tab_balance);
+                    customer.venmo = change.fullDocument.venmo;
+                  }
+                  return customer;
+                })
+              );
+            });
+          }
+        }
+      } catch (error) {
+        // Handle errors (including WebSocket errors)
+        console.error('Error maintaining tabs:', error);
+        reconnect(); // Attempt reconnection
+      } finally {
+        isMaintainTabsRunning = false;
       }
     }
-    maintainTabs();
+  
+    async function reconnect() {
+      // Retry connection after a delay
+      console.log('Retrying connection...');
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Adjust delay as needed
+      maintainTabs(); // Restart the process
+    }
+  
+    if (!isMaintainTabsRunning) {
+      maintainTabs();
+    }
   }, [user]);
 
   return (
