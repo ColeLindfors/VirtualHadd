@@ -1,34 +1,27 @@
 import React from 'react';
 import './CustomerTab.css';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 
+// TODO: Fix weird box shadow on the inline portion of customer
 function CustomerTab({ customer, showPopUp }) {
 
-  const handleAddToTab = () => {
-    showPopUp(customer, 'add');
+  const handleClickPerson = () => {
+    showPopUp(customer, 'selector');
   };
 
-  const handleRemoveFromTab = () => {
-    showPopUp(customer, 'remove');
+  const handleClickCart = (event) => {
+    event.stopPropagation();
+    alert('Not implemented yet!');
   };
 
   return (
-    <div className="customerContainer">
+    <div className="customerButton" onClick={handleClickPerson}>
       <h3 className="customerName"> {customer.firstName} {customer.lastName}</h3>
 
       <div className="customerDetails">
         <p className="customerTab">${customer.tab.toFixed(2)}</p>
-        <div className="customerIconsContainer">
-          <AddIcon
-            className="addIcon"
-            onClick={handleAddToTab}
-          />
-          <RemoveIcon
-            className="removeIcon"
-            onClick={handleRemoveFromTab}
-          />
-        </div> 
+          <span className="material-symbols-outlined" onClick={handleClickCart}>
+            shopping_cart
+          </span>
       </div>
     </div>
   );
