@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CustomerTab from './CustomerTab';
 import './Tabs.css';
-import PopUp from './popUps/PopUp';
+import PopUp from '../popUps/PopUp';
 
 function Tabs({ customers, searchTerm }) {
 
@@ -13,10 +13,10 @@ function Tabs({ customers, searchTerm }) {
     const zeroBalanceCustomers = [];
   
     customers.forEach((customer) => {
-      if (`${customer.firstName} ${customer.lastName}`
+      if (`${customer.first_name} ${customer.last_name}`
         .toLowerCase()
         .includes(searchTerm.toLowerCase())) {
-        if (customer.tab > 0) {
+        if (customer.tab_balance > 0) {
           positiveBalanceCustomers.push(customer);
         } else {
           zeroBalanceCustomers.push(customer);
@@ -42,7 +42,7 @@ function Tabs({ customers, searchTerm }) {
   <div className="tabsWrapper">
     <ul className="tabsContainer">
       {positiveBalanceCustomers.map((customer) => (
-        <li key={customer.id}>
+        <li key={customer._id}>
           <CustomerTab customer={customer} showPopUp={showPopUp}/>
         </li>
       ))}
@@ -52,7 +52,7 @@ function Tabs({ customers, searchTerm }) {
           <h2>No Outstanding Balance</h2>
           <ul className="tabsContainer">
               {zeroBalanceCustomers.map((customer) => (
-                <li key={customer.id}>
+                <li key={customer._id}>
                   <CustomerTab customer={customer} showPopUp={showPopUp}/>
                 </li>
               ))}

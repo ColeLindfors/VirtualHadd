@@ -67,7 +67,7 @@ function VenmoPopUp({ showPopUp, customer}) {
     const REALM_APP_ID = "application-0-gydmq";
     const app = new Realm.App({ id: REALM_APP_ID });
     const venmo = inputValue.substring(1);
-    const setVenmoPromise = app.currentUser.functions.setVenmo({userId: customer.id, venmoUsername: venmo}); // TODO: Backend Update Venmo Function not made yet
+    const setVenmoPromise = app.currentUser.functions.setVenmo({userId: customer._id, venmoUsername: venmo}); // TODO: Backend Update Venmo Function not made yet
     setVenmoPromise.then(result => {
         const updatedVenmo = result;
         if (updatedVenmo !== null) {
@@ -94,7 +94,7 @@ function VenmoPopUp({ showPopUp, customer}) {
 
   return (
     <div className="overlay" onClick={() => showPopUp(null)} >
-        <div className="popupFrame">
+        <div className="venmoPopupFrame">
             <div 
                 className="popupContainer"
                 onClick={(event) => event.stopPropagation()} // Prevents clicks within the popup from closing the popup

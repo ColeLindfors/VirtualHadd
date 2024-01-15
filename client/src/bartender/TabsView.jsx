@@ -18,10 +18,10 @@ function TabsView() {
         setCustomers(allCustomers
           .filter((customer) => customer.first_name !== 'guestFirstName')
           .map((customer) => ({
-            id: customer._id.toString(),
-            firstName: customer.first_name,
-            lastName: customer.last_name,
-            tab: parseFloat(customer.tab_balance),
+            _id: customer._id.toString(),
+            first_name: customer.first_name,
+            last_name: customer.last_name,
+            tab_balance: parseFloat(customer.tab_balance),
             venmo: customer.venmo,
         })));
       } catch (error) {
@@ -54,8 +54,8 @@ function TabsView() {
             setCustomers(oldCustomers => {
               return (
                 oldCustomers.map((customer) => {
-                  if (customer.id === changedCustomerId) {
-                    customer.tab = parseFloat(change.fullDocument.tab_balance);
+                  if (customer._id === changedCustomerId) {
+                    customer.tab_balance = parseFloat(change.fullDocument.tab_balance);
                     customer.venmo = change.fullDocument.venmo;
                   }
                   return customer;
@@ -87,12 +87,14 @@ function TabsView() {
 
   return (
     <div className="tabsViewContainer">
-      <BartenderHeader activeTab='tabs'/>
-      <SearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        placeholder="Search for a Lodger..."
-      />
+      <div className="gray-header-background">
+        <BartenderHeader activeTab='tabs'/>
+        <SearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          placeholder="Search for a Lodger..."
+        />
+      </div>
       <Tabs customers={customers} searchTerm={searchTerm} />
     </div>
   );

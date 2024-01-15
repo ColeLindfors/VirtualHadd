@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { UserContext } from './contexts/user.context'
 import TabsView from './bartender/TabsView'
 import Menu from './menu/Menu'
@@ -22,14 +22,25 @@ function Home() {
         <>
           <Route path="/" element={<TabsView />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="/ordering/:customerUsername" element={<Menu/>} />
         </>
       )
-    } else {
+    } else if (user?.customData?.role === 'customer'){
       return (
         <>
           <Route path="/" element={<Menu />} />
           <Route path ="/cart" element={<CustomerCart />} />
           <Route path="/menu" element={<Menu />} />
+
+        </>
+      )
+    } else { // guest
+      return (
+        <>
+          <Route path="/" element={<Menu />} />
+          <Route path="/menu" element={<Menu />} />
+          {/* <Route path="*" element={<Menu/>} /> */}
+          <Route path="*" element={<Navigate to="/menu" replace />} />
         </>
       )
     }

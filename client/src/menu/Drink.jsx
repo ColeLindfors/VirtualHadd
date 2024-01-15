@@ -1,9 +1,10 @@
 import  React, { useContext } from 'react';
 import { UserContext } from '../contexts/user.context';
 import './Drink.css';
+import { useAppState } from '../contexts/StateContext';
 
 function Drink ({ drink, setCart, cart }) {
-
+    const { state } = useAppState();
     const { user } = useContext(UserContext);
 
     const handleAddDrink = () => {
@@ -44,28 +45,7 @@ function Drink ({ drink, setCart, cart }) {
                 <p>{drink.description}</p>
                 <div className='drink-info-bottom'>
                     <h2>${drink.price.toFixed(2)}</h2>
-                    { user.customData.role === 'bartender' ? // bartender case (sold out and hide functionality)
-                        <div className='drink-info-bottom-right bartender'>
-                            <span // sold out button
-                                // onClick={handleSoldOut} // ! Not implemented yet
-                                onClick={handleNotImplemented}
-                                className='material-symbols-outlined'>
-                                {drink.soldOut
-                                    ? 'remove_shopping_cart'
-                                    : 'shopping_cart'
-                                }
-                            </span>
-                            <span // isVisible button
-                                // onClick={handleIsVisible} // ! Not implemented yet
-                                onClick={handleNotImplemented}
-                                className='material-symbols-outlined'>
-                                {drink.isVisible
-                                    ? 'visibility'
-                                    : 'visibility_off'
-                                }
-                            </span>
-                        </div>
-                    : user.customData.role === 'customer' ? // customer case (cart functionality)
+                    { user.customData.role === 'customer' || state?.customer ? // customer case and bartender ordering case (cart functionality)
                         <div className='drink-info-bottom-right customer'>
                             {
                                 cart[drink.id]
@@ -86,6 +66,27 @@ function Drink ({ drink, setCart, cart }) {
                                 onClick={handleAddDrink}
                             >
                                 add
+                            </span>
+                        </div>
+                    : user.customData.role === 'bartender' ? // bartender case (sold out and hide functionality)
+                        <div className='drink-info-bottom-right bartender'>
+                            <span // sold out button
+                                // onClick={handleSoldOut} // ! Not implemented yet
+                                onClick={handleNotImplemented}
+                                className='material-symbols-outlined'>
+                                {drink.soldOut
+                                    ? 'remove_shopping_cart'
+                                    : 'shopping_cart'
+                                }
+                            </span>
+                            <span // isVisible button
+                                // onClick={handleIsVisible} // ! Not implemented yet
+                                onClick={handleNotImplemented}
+                                className='material-symbols-outlined'>
+                                {drink.isVisible
+                                    ? 'visibility'
+                                    : 'visibility_off'
+                                }
                             </span>
                         </div>
                     : <></> // guest case (no functionality)

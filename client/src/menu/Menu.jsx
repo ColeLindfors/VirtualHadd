@@ -1,10 +1,17 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect} from 'react';
+import { useLocation } from 'react-router-dom';
 import { UserContext } from '../contexts/user.context';
 import CustomerHeader from '../customer/CustomerHeader';
 import BartenderHeader from '../bartender/BartenderHeader';
+import Selectors from './Selectors';
 import SearchBar from './SearchBar';
 import Drinks from './Drinks';
 import './Menu.css';
+import PopUp from '../popUps/PopUp';
+import { useAppState } from '../contexts/StateContext';
+
+import { useNavigate } from 'react-router-dom';
+
 
 
 function Menu () {
@@ -16,8 +23,16 @@ function Menu () {
 	const [liquorOptions, setLiquorOptions] = useState([]);
 	const [varietyOptions, setVarietyOptions] = useState([]);
 	const { user } = useContext(UserContext);
+	const {state, setState} = useAppState();
+	const customer = state?.customer;
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	useEffect( () => {
+		if (!customer && location.pathname.includes('/ordering')) {
+			// navigate to the tabs page if the bartender is not ordering for a customer
+			navigate('/');
+		}
 		async function fetchDrinks() {
 			try {
 				const fetchedDrinks = await user.functions.getAllDrinks();
@@ -57,7 +72,7 @@ function Menu () {
 			}
 		}
 		fetchDrinks();
-	  }, [user]);
+	  }, [user, customer, navigate, location]);
 
 	const handleVarietyChange = (event) => {
 		setVariety(event.target.value);
@@ -71,54 +86,71 @@ function Menu () {
 		return Object.keys(obj).length === 0 && obj.constructor === Object;
 	}
 
+
+	function handleCartClick() {
+		alert('Not implemented yet!');
+	}
+
+	function handleBackClick() {
+		setState(prevState => ({...prevState, customer: null}));
+		navigate('/');
+	}
+
+	function getCartQuantity() {
+		let quantity = 0;
+		for (const drinkId in cart) {
+			quantity += cart[drinkId].quantity;
+		}
+		return quantity;
+	
+	}
+
 	return (
 		<div className='menu-container'>
-			{user.customData.role === 'bartender'
-				? <BartenderHeader activeTab='menu'/> // Bartender case
-				: <CustomerHeader isCartEmpty={isEmpty(cart)} activeTab='menu'/> // Customer and Guest case
-			}
-			<div className='menu-selectors'>
-				<div className={`selector-wrapper ${variety !== 'all_varieties' ? 'selected' : ''}`} >
-					<select 
-						className='dynamic-selector'
-						onChange={handleVarietyChange}
-					>
-						<option key="all_varieties" value="all_varieties" >All Varieties</option>
-						{varietyOptions.map((varietyOption) => 
-							<option key={varietyOption} value={varietyOption}>
-								{varietyOption.charAt(0).toUpperCase() + varietyOption.slice(1)}
-							</option>
-						)}
-					</select>
-				</div>
-				<div className={`selector-wrapper ${liquor !== 'all_liquors' ? 'selected' : ''}`}>
-					<select 
-						className='dynamic-selector'
-						onChange={handleLiquorChange}
-					>
-						<option key="all_liquors" value="all_liquors">All Liquors</option>
-						{liquorOptions.map((liquorOption) => 
-							<option key={liquorOption} value={liquorOption}>
-								{liquorOption.charAt(0).toUpperCase() + liquorOption.slice(1)}
-							</option>
-						)}
-					</select>
-				</div>
+			<div className="gray-header-background">
+				{user.customData.role === 'bartender'
+					? customer ? // Bartender ordering drinks for a customer
+						<div className="back-name-cart-header">
+							<span className="material-symbols-outlined back-arrow" onClick={() => handleBackClick()}>
+								chevron_left
+							</span>
+							<h1>{customer.first_name} {customer.last_name}</h1>
+							<span className="material-symbols-outlined cart" onClick={() => handleCartClick()}>
+							{!isEmpty(cart) && 
+								<div className="cartFilledIcon">
+									<div className="cartQuantity">{getCartQuantity()}</div>
+								</div>}
+								shopping_cart
+							</span>
+						</div>
+						: <BartenderHeader activeTab='menu'/> // Bartender menu (for setting drink availability)
+					: <CustomerHeader isCartEmpty={isEmpty(cart)} activeTab='menu'/> // Customer and Guest case
+				}
+				<Selectors
+					variety={variety}
+					liquor={liquor}
+					handleVarietyChange={handleVarietyChange}
+					handleLiquorChange={handleLiquorChange}
+					liquorOptions={liquorOptions}
+					varietyOptions={varietyOptions}
+				/>
+				<SearchBar 
+					setSearchTerm={setSearchTerm} 
+					searchTerm={searchTerm} 
+					placeholder="Search for a drink..."
+				/>
 			</div>
-			<SearchBar 
-				setSearchTerm={setSearchTerm} 
-				searchTerm={searchTerm} 
-				placeholder="Search for a drink..."
-			/>
-			<Drinks
-			drinks={drinks}
-			searchTerm={searchTerm} 
-			variety={variety} 
-			liquor={liquor}
-			cart={cart}
-			setCart={setCart}
-			userRole={user.customData.role}
-			/>
+			<div className='drink-wrapper'>
+				<Drinks
+					drinks={drinks}
+					searchTerm={searchTerm} 
+					variety={variety} 
+					liquor={liquor}
+					cart={cart}
+					setCart={setCart}
+					userRole={user.customData.role}
+				/>
+			</div>
 		</div>
 	)
 }

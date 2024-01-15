@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../contexts/user.context';
 import './BartenderHeader.css';
+import { useAppState } from '../contexts/StateContext';
 
 function BartenderHeader ({activeTab}) {
-
+    const { setState } = useAppState();
     const {logoutUser} = useContext(UserContext);
 
     const handleLogout = () => {
@@ -17,11 +18,15 @@ function BartenderHeader ({activeTab}) {
         alert('Not implemented yet!');
     }
 
+    const handleClickMenu = () => {
+        setState(prevState => ({ ...prevState, customer: null }));
+    }
+
 
     return (
         <div className='headers'>
             <div className='text-headers'>
-                <Link to="/menu">
+                <Link to="/menu" onClick={handleClickMenu}>
                     <h1 className={activeTab === 'menu' ? 'active' : ''}>
                         Menu
                     </h1>

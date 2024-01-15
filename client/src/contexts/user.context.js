@@ -37,7 +37,7 @@ export function UserProvider({children}) {
             setUser(app.currentUser);
             return app.currentUser;
         } catch (error) {
-            throw error;
+            console.error(error);
         }
     };
 

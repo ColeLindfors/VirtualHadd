@@ -18,8 +18,8 @@ function AddRemovePopUp({ showPopUp, customer, popUpType }) {
      * and whether the customer has a tab.
      */
     function initializeInputValue() {
-      if (popUpType === "remove" && customer.tab > 0) {
-        setInputValue("$" + customer.tab.toFixed(2));
+      if (popUpType === "remove" && customer.tab_balance > 0) {
+        setInputValue("$" + customer.tab_balance.toFixed(2));
       }
       else {
         setInputValue("");
@@ -32,7 +32,7 @@ function AddRemovePopUp({ showPopUp, customer, popUpType }) {
       document.querySelector(".largePopupInput").focus();
     }
     
-  }, [popUpType, customer.tab]);
+  }, [popUpType, customer.tab_balance]);
 
   /**
    * Handles changes to the input field value, ensuring that the input value is formatted correctly.
@@ -81,22 +81,22 @@ function AddRemovePopUp({ showPopUp, customer, popUpType }) {
     const app = new Realm.App({ id: REALM_APP_ID });
     const amount = inputValue.substring(1);
     if (popUpType === "add") {
-        const incrementTabPromise = app.currentUser.functions.incrementTabById({userId: customer.id, amount: parseFloat(amount)});
+        const incrementTabPromise = app.currentUser.functions.incrementTabById({userId: customer._id, amount: parseFloat(amount)});
         incrementTabPromise.then(result => {
             const updatedTabBalance = result;
             if (updatedTabBalance !== null) {
-                customer.tab = parseFloat(updatedTabBalance);
+                customer.tab_balance = parseFloat(updatedTabBalance);
                 // TODO: Add a success message, hopefully with a nice animation
             }
         }).catch((error) => {
             console.error(error);
         });
     } else if (popUpType === "remove") {
-        const decrementTabPromise = app.currentUser.functions.decrementTabById({userId: customer.id, amount: parseFloat(amount)});
+        const decrementTabPromise = app.currentUser.functions.decrementTabById({userId: customer._id, amount: parseFloat(amount)});
         decrementTabPromise.then(result => {
             const updatedTabBalance = result;
             if (updatedTabBalance !== null) {
-                customer.tab = parseFloat(updatedTabBalance);
+                customer.tab_balance = parseFloat(updatedTabBalance);
                 // TODO: Add a success message, hopefully with a nice animation
             }
         }).catch((error) => {
@@ -119,7 +119,7 @@ function AddRemovePopUp({ showPopUp, customer, popUpType }) {
   }
 
 
-  const endsWithS = customer.firstName[customer.firstName.length - 1] === 's';
+  const endsWithS = customer.first_name[customer.first_name.length - 1] === 's';
 
 
   return (
@@ -140,8 +140,8 @@ function AddRemovePopUp({ showPopUp, customer, popUpType }) {
                     onChange={handleInputChange}
                     onBlur={handleBlur}
                 />
-                <h2> {popUpType === "remove" ? "From" : "To"} {customer.firstName}{endsWithS ? "'" : "'s"}</h2>
-                {(popUpType === "remove" ? <div className="currentBalanceDiv">${customer.tab.toFixed(2)}</div> : null)}
+                <h2> {popUpType === "remove" ? "From" : "To"} {customer.first_name}{endsWithS ? "'" : "'s"}</h2>
+                {(popUpType === "remove" ? <div className="currentBalanceDiv">${customer.tab_balance.toFixed(2)}</div> : null)}
                 <h2>Tab</h2>
                 </div>
                 <div className="popupButtonsContainer">

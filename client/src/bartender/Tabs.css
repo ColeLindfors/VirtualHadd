@@ -12,7 +12,8 @@
     flex-direction: column;
     overflow-y: auto;
     padding-bottom: 10px;
-    /* padding-inline: 12px; */
+    box-sizing: border-box;
+    padding-inline: 15px;
 }
 
 /* Subtext for the tabs (in a light gray color) */
