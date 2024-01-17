@@ -91,3 +91,21 @@
 	font-size: 35px;
     color: #646464;
 }
+
+.drink-container.grayed-out {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.drink-container .sold-out {
+    border-radius: 10px;
+    height: 32px;
+    width: 130px;
+    background-color: #FF255C;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}

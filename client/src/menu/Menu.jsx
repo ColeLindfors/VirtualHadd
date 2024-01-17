@@ -149,6 +149,7 @@ function Menu () {
 			<div className='drink-wrapper'>
 				<Drinks
 					drinks={inCartView ? drinksInCart() : drinks}
+					setDrinks={setDrinks}
 					searchTerm={searchTerm} 
 					variety={variety} 
 					liquor={liquor}

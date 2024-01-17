@@ -2,8 +2,9 @@ import  React, { useContext } from 'react';
 import { UserContext } from '../contexts/user.context';
 import './Drink.css';
 import { useAppState } from '../contexts/StateContext';
+import * as Realm from 'realm-web';
 
-function Drink ({ drink, setCart, cart }) {
+function Drink ({ drink, setCart, cart, setDrinks}) {
     const { state } = useAppState();
     const { user } = useContext(UserContext);
 
@@ -29,17 +30,39 @@ function Drink ({ drink, setCart, cart }) {
         }
     }
 
-    // const handleSoldOut = () => {}
-
-    // const handleIsVisible = () => {}
-
-
-    const handleNotImplemented = () => {
-        alert('Not implemented yet!');
+    // apply grayed out styling to drinks that are sold out
+    function grayIfSoldOut() {
+        if (drink.soldOut && ((user.customData.role === 'bartender' && state?.customer) || (user.customData.role === 'customer') || (user.customData.role === 'guest'))) {
+            return 'grayed-out';
+        }
+        else {return ''}
+    }
+    
+    // used for swapping the soldOut and isVisible fields
+    function handleSwapField(fieldName, newFieldValue) {
+        const REALM_APP_ID = "application-0-gydmq";
+        const app = new Realm.App({ id: REALM_APP_ID });
+        const swapDrinkVisibilityPromise = app.currentUser.functions.setDrinkField({drinkId: drink.id, fieldName: fieldName, fieldValue: newFieldValue});
+        swapDrinkVisibilityPromise.then(result => {
+            console.log('result:', result);
+            setDrinks(prevDrinks => {
+                const newDrinks = prevDrinks.map((oldDrink) => {
+                    if (oldDrink.id === drink.id) {
+                        oldDrink[fieldName] = newFieldValue;
+                    }
+                    return oldDrink;
+                });
+                return newDrinks;
+            });
+            
+            // TODO: Add a success message, hopefully with a nice animation
+        }).catch((error) => {
+            console.error(error);
+        });
     }
 
     return (
-        <div className='drink-container'>
+        <div className={`drink-container ${grayIfSoldOut()}`}>
 			<img src={`${drink.image}`} alt={drink.name} />
             <div className='drink-info'>
                 <h2>{drink.name}</h2>
@@ -49,40 +72,43 @@ function Drink ({ drink, setCart, cart }) {
                     { user.customData.role === 'customer' || state?.customer ? // customer case and bartender ordering case (cart functionality)
                         <div className='drink-info-bottom-right customer'>
                             {
-                                cart[drink.id]
-                                ?
-                                    <>
-                                        <span // remove one drink from cart button
+                                drink.soldOut ? // sold out case
+                                    <div className='sold-out'>SOLD OUT</div>
+                                : <>
+                                    { // editable quantity case
+                                        cart[drink.id] ?
+                                        <>
+                                            <span // remove one drink from cart button
                                             className='material-symbols-outlined'
                                             onClick={handleRemoveDrink}
-                                        >
+                                            >
                                             remove
-                                        </span>
-                                        <h3 className='drink-quantity'>{cart[drink.id].quantity}</h3>
-                                    </>
-                                : <></>
+                                            </span>
+                                            <h3 className='drink-quantity'>{cart[drink.id].quantity}</h3>
+                                        </>
+                                        : <></>
+                                    }
+                                    <span // add to cart button
+                                        className='material-symbols-outlined'
+                                        onClick={handleAddDrink}
+                                    >
+                                        add
+                                    </span>
+                                </>
                             }
-                            <span // add to cart button
-                                className='material-symbols-outlined'
-                                onClick={handleAddDrink}
-                            >
-                                add
-                            </span>
                         </div>
                     : user.customData.role === 'bartender' ? // bartender case (sold out and hide functionality)
                         <div className='drink-info-bottom-right bartender'>
                             <span // sold out button
-                                // onClick={handleSoldOut} // ! Not implemented yet
-                                onClick={handleNotImplemented}
+                                onClick={() => handleSwapField('soldOut', !drink.soldOut)}
                                 className='material-symbols-outlined'>
                                 {drink.soldOut
-                                    ? 'remove_shopping_cart'
+                                    ? 'shopping_cart_off'
                                     : 'shopping_cart'
                                 }
                             </span>
                             <span // isVisible button
-                                // onClick={handleIsVisible} // ! Not implemented yet
-                                onClick={handleNotImplemented}
+                                onClick={() => handleSwapField('isVisible', !drink.isVisible)}
                                 className='material-symbols-outlined'>
                                 {drink.isVisible
                                     ? 'visibility'
@@ -90,7 +116,10 @@ function Drink ({ drink, setCart, cart }) {
                                 }
                             </span>
                         </div>
-                    : <></> // guest case (no functionality)
+                    :  // guest case (can only show sold out)
+                        drink.soldOut ? // sold out case
+                            <div className='sold-out'>SOLD OUT</div>
+                        : <></> // not sold out (no buttons for guest)
                     }
                 </div>
             </div>

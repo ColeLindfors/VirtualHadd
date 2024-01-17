@@ -1,7 +1,8 @@
+import React from 'react';
 import Drink from './Drink';
 import './Drinks.css';
 
-function Drinks ({ drinks, searchTerm, variety, liquor, setCart, cart }) {
+function Drinks ({ drinks, setDrinks, searchTerm, variety, liquor, setCart, cart }) {
 
 	function filterDrinks () {
 		if (!drinks) {
@@ -22,7 +23,7 @@ function Drinks ({ drinks, searchTerm, variety, liquor, setCart, cart }) {
 		<ul className='drinks-container'>
 			{filteredDrinks.map((drink) => (
 				<li key={drink.id}>
-					<Drink drink={drink} setCart={setCart} cart={cart}/>
+					<Drink drink={drink} setCart={setCart} cart={cart} setDrinks={setDrinks}/>
 				</li>
 			))}
 		</ul>
