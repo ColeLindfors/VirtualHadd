@@ -12,7 +12,7 @@ function SelectorPopUp({ showPopUp, customer}) {
     const {setState} = useAppState();
     useEffect(() => {
         setState(prevState => ({ ...prevState, customer: customer }));
-      }, [customer, setState]);
+    }, [customer, setState]);
 
     const venmoURL = "https://venmo.com/u/" + customer.venmo;
 
@@ -29,7 +29,7 @@ function SelectorPopUp({ showPopUp, customer}) {
                 >
                     <h1>{customer.first_name} {customer.last_name}</h1>
                     <h3 className="venmoLink" onClick={() => window.open(venmoURL, "_blank")}>{customer.venmo?"@":""}{customer.venmo}</h3>
-                    <div className="purpleButton" onClick={() => showPopUp(customer, 'venmo')}>
+                    <div className="purpleButton" onClick={() => showPopUp(customer, 'add')}>
                         <h3>Add to Tab</h3>
                         <span className='material-symbols-outlined'>
                             add

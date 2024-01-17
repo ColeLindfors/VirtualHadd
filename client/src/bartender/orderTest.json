@@ -1,9 +1,0 @@
-{
-    "_id": "autofill",
-    "drinks": ["drinkId1, drinkId2, drinkId3"],
-    "customer_id": "customerId",
-    "time": "fulldateTimething",
-    "status": "pending, declined, claimed, completed",
-    "time_updated": "fulldateTimething",
-    "claimed_by": "bartenderId"
-}

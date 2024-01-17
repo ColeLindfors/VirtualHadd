@@ -23,9 +23,13 @@
     justify-content: flex-start;
 	padding-inline: 15px;
 	overflow-y: scroll;
+	padding-block-start: 10px;
+	width: 100%;
+	box-sizing: border-box;
 }
 
-.back-name-cart-header {
+/* Bartender Shopping Header and BartenderCartHeader stuff*/
+.back-name-shopping-header {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -35,34 +39,51 @@
 	padding-block: 20px;
 }
 
-.back-name-cart-header h1 {
+.back-name-shopping-header h1 {
 	font-size: 32pt;
 	color: black;
 }
 
-.back-name-cart-header .material-symbols-outlined.back-arrow {
+.back-name-shopping-header .material-symbols-outlined.back-arrow {
 	font-size: 40px;
 	color: #603D97;
 }
 
-.back-name-cart-header .material-symbols-outlined.cart {
+.back-name-shopping-header .material-symbols-outlined.cart {
 	font-size: 45px;
 	color: black;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	
 }
+
+.back-name-shopping-header h1.shake {
+	animation: shake 0.2s ease-in-out 0s 2;
+}
+
+@keyframes shake {
+	0% {
+	  margin-left: 0rem;
+	}
+	25% {
+	  margin-left: 0.5rem;
+	}
+	75% {
+	  margin-left: -0.5rem;
+	}
+	100% {
+	  margin-left: 0rem;
+	}
+  }
 
 .cartFilledIcon {
 	background: #E4CB1A;
     border-radius: 50%;
 	width: 18px;
 	height: 18px;
-	position: absolute;
-	box-shadow: 0px 3px 4px 0px rgba(255, 37, 92, 0.30);
 	align-items: center;
 	justify-content: center;
+	position: absolute;
 }
 
 .cartFilledIcon .cartQuantity {
@@ -76,3 +97,62 @@
 	justify-content: center;
 }
 
+.column-flex {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.column-flex .purple-button {
+    box-sizing: border-box;
+    display: flex;
+	flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 15px;
+    width: 100%;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #603D97;
+    /* Purple Shadow */
+    box-shadow: 0px 1px 5px 2px rgba(96, 61, 151, 0.25); 
+}
+
+.column-flex .purple-button h3 {
+	color: #FFFFFF;
+	font-size: 20px;
+	font-weight: 600;
+	margin: 0;
+}
+
+.column-flex .purple-button:active {
+	transform: scale(1.03);
+	transition: transform 0.1s;
+}
+
+.column-flex .total-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding-inline: 15px;
+	padding-block: 10px;
+}
+
+.column-flex .total-row h4 {
+	font-size: 16px;
+	font-weight: 600;
+	margin: 0;
+	padding-inline: 15px;
+}
+
+.column-flex .total-row h4.purple {
+	color: #603D97;
+}
+
+.column-flex .total-row h4.gray {
+	color: #4F4F4F;
+}

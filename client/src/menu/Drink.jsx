@@ -9,28 +9,29 @@ function Drink ({ drink, setCart, cart }) {
 
     const handleAddDrink = () => {
         if (!cart[drink.id]) {
-            setCart({...cart, [drink.id]: {quantity: 1}});
+            setCart({...cart, [drink.id]: {quantity: 1, price: drink.price}});
             return;
         }
         else {
-            setCart({...cart, [drink.id]: {quantity: cart[drink.id].quantity + 1}});
+            setCart({...cart, [drink.id]: {...cart[drink.id], quantity: cart[drink.id].quantity + 1}});
         }
     }
 
     const handleRemoveDrink = () => {
-        if (cart[drink.id].quantity === 1) {
-            const newCart = {...cart};
-            delete newCart[drink.id];
-            setCart(newCart);
-        } else {
-            setCart({...cart, [drink.id]: {quantity: cart[drink.id].quantity - 1}});
+        if (cart[drink.id].quantity === 1) { // remove drink from cart (quantity = 0)
+            setCart(prevCart => {
+                const newCart = { ...prevCart };
+                delete newCart[drink.id];
+                return newCart;
+            });
+        } else { // decrement quantity of drink in cart (quantity > 0)
+            setCart({...cart, [drink.id]: {...cart[drink.id], quantity: cart[drink.id].quantity - 1}});
         }
     }
 
-    // const handleSoldOut = () => {
-    //     drink.soldOut = !drink.soldOut;
-    //     user.functions.updateDrink(drink);
-    // }
+    // const handleSoldOut = () => {}
+
+    // const handleIsVisible = () => {}
 
 
     const handleNotImplemented = () => {

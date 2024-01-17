@@ -16,8 +16,8 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
         }
     }
 
-    const handleNotImplementedRedirect = () => {
-        alert('Not implemented yet!');
+    function handleNotImplementedRedirect(feature) {
+        alert(`${feature} not implemented yet!`);
     }
 
       /**
@@ -48,7 +48,7 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
                 }
                 {!isGuest &&
                     <span 
-                        onClick={handleNotImplementedRedirect} // ! Remove this line when statistics are implemented
+                        onClick={() => handleNotImplementedRedirect('Statistics')} // ! Remove this line when statistics are implemented
                         className={`material-symbols-outlined ${activeTab === 'statistics' ? 'active-header' : ''}`}
                     >
                         book_2
@@ -56,7 +56,7 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
                 }
                 {!isGuest &&
                     <span 
-                        onClick={handleNotImplementedRedirect} // ! Remove this line when shopping cart is implemented
+                        onClick={() => handleNotImplementedRedirect('Ordering')} // ! Remove this line when shopping cart is implemented
                         className={`material-symbols-outlined ${activeTab === 'shoppingCart' ? 'active-header' : ''}`}>
                         {!isCartEmpty && <div className="cartFilledIcon"></div>}
                         shopping_cart

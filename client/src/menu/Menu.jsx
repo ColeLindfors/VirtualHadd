@@ -3,11 +3,12 @@ import { useLocation } from 'react-router-dom';
 import { UserContext } from '../contexts/user.context';
 import CustomerHeader from '../customer/CustomerHeader';
 import BartenderHeader from '../bartender/BartenderHeader';
+import BartenderShoppingHeader from '../menu/BartenderShoppingHeader';
+import BartenderCartHeader from '../menu/BartenderCartHeader';
 import Selectors from './Selectors';
 import SearchBar from './SearchBar';
 import Drinks from './Drinks';
 import './Menu.css';
-import PopUp from '../popUps/PopUp';
 import { useAppState } from '../contexts/StateContext';
 
 import { useNavigate } from 'react-router-dom';
@@ -23,8 +24,9 @@ function Menu () {
 	const [liquorOptions, setLiquorOptions] = useState([]);
 	const [varietyOptions, setVarietyOptions] = useState([]);
 	const { user } = useContext(UserContext);
-	const {state, setState} = useAppState();
+	const {state} = useAppState();
 	const customer = state?.customer;
+	const inCartView = state?.inCartView;
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -83,17 +85,7 @@ function Menu () {
 	}
 
 	function isEmpty(obj) {
-		return Object.keys(obj).length === 0 && obj.constructor === Object;
-	}
-
-
-	function handleCartClick() {
-		alert('Not implemented yet!');
-	}
-
-	function handleBackClick() {
-		setState(prevState => ({...prevState, customer: null}));
-		navigate('/');
+		return Object.keys(obj).length === 0 && obj.constructor === Object
 	}
 
 	function getCartQuantity() {
@@ -102,47 +94,61 @@ function Menu () {
 			quantity += cart[drinkId].quantity;
 		}
 		return quantity;
-	
+	}
+
+	function drinksInCart() {
+		const drinksInCart = [];
+		const drinksIdsInCart = new Set();
+		for (const drinkId in cart) {
+			drinksIdsInCart.add(drinkId);
+		}
+		for (const drink of drinks) {
+			if (drinksIdsInCart.has(drink.id)) {
+				drinksInCart.push(drink);
+			}
+		}
+		return drinksInCart;
 	}
 
 	return (
 		<div className='menu-container'>
 			<div className="gray-header-background">
 				{user.customData.role === 'bartender'
-					? customer ? // Bartender ordering drinks for a customer
-						<div className="back-name-cart-header">
-							<span className="material-symbols-outlined back-arrow" onClick={() => handleBackClick()}>
-								chevron_left
-							</span>
-							<h1>{customer.first_name} {customer.last_name}</h1>
-							<span className="material-symbols-outlined cart" onClick={() => handleCartClick()}>
-							{!isEmpty(cart) && 
-								<div className="cartFilledIcon">
-									<div className="cartQuantity">{getCartQuantity()}</div>
-								</div>}
-								shopping_cart
-							</span>
-						</div>
-						: <BartenderHeader activeTab='menu'/> // Bartender menu (for setting drink availability)
-					: <CustomerHeader isCartEmpty={isEmpty(cart)} activeTab='menu'/> // Customer and Guest case
+					? inCartView ? // Bartender reviewing cart
+						<BartenderCartHeader
+							getCartQuantity={getCartQuantity}
+							cart={cart}
+						/>
+					: customer ? // Bartender picking out drinks for a customers order
+						<BartenderShoppingHeader 
+							isCartEmpty={isEmpty(cart)} 
+							getCartQuantity={getCartQuantity}
+						/>
+					: <BartenderHeader activeTab='menu'/> // Bartender menu (for setting drink availability)
+				: <CustomerHeader isCartEmpty={isEmpty(cart)} activeTab='menu'/> // Customer and Guest case
 				}
-				<Selectors
-					variety={variety}
-					liquor={liquor}
-					handleVarietyChange={handleVarietyChange}
-					handleLiquorChange={handleLiquorChange}
-					liquorOptions={liquorOptions}
-					varietyOptions={varietyOptions}
-				/>
-				<SearchBar 
-					setSearchTerm={setSearchTerm} 
-					searchTerm={searchTerm} 
-					placeholder="Search for a drink..."
-				/>
+				{!inCartView ? // Selector and Search Bar only show up when not in cart view
+					<>
+						<Selectors
+							variety={variety}
+							liquor={liquor}
+							handleVarietyChange={handleVarietyChange}
+							handleLiquorChange={handleLiquorChange}
+							liquorOptions={liquorOptions}
+							varietyOptions={varietyOptions}
+						/>
+						<SearchBar 
+							setSearchTerm={setSearchTerm} 
+							searchTerm={searchTerm} 
+							placeholder="Search for a drink..."
+						/>
+					</>
+				: <></>
+				}
 			</div>
 			<div className='drink-wrapper'>
 				<Drinks
-					drinks={drinks}
+					drinks={inCartView ? drinksInCart() : drinks}
 					searchTerm={searchTerm} 
 					variety={variety} 
 					liquor={liquor}

@@ -5,31 +5,9 @@ import SearchBar from '../menu/SearchBar';
 import Tabs from './Tabs';
 import './TabsView.css';
 
-function TabsView() {
+function TabsView( {customers, setCustomers}) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [customers, setCustomers] = useState([]);
   const { user } = useContext(UserContext);
-
-  useEffect( () => {
-    async function fetchTabs() {
-      try {
-        const allCustomers = await user.functions.getAllTabs();
-        // map the database results to a more friendly format
-        setCustomers(allCustomers
-          .filter((customer) => customer.first_name !== 'guestFirstName')
-          .map((customer) => ({
-            _id: customer._id.toString(),
-            first_name: customer.first_name,
-            last_name: customer.last_name,
-            tab_balance: parseFloat(customer.tab_balance),
-            venmo: customer.venmo,
-        })));
-      } catch (error) {
-        console.error("Failed to fetch tabs: ", error);
-      }
-    }
-    fetchTabs();
-  }, [user]);
 
   useEffect(() => {
     let isMaintainTabsRunning = false;
@@ -46,21 +24,25 @@ function TabsView() {
   
         const collection = client.db("VirtualHaddDB").collection("users");
         changeStream = collection.watch(); // Start change stream
-  
+        let lastChangeId = null; // we only want to update if the change is a new change
         for await (const change of changeStream) {
-          // * Possible optimization: keep track of the last change that occured and only update if the change is different
+          // TODO: finish repeat change optimization, still not great
+          if (String(change._id) === String(lastChangeId)) {
+            console.log('change already handled');
+            continue;
+          }
+          lastChangeId = change._id;
           if(change.operationType === 'update') {
             const changedCustomerId = change.fullDocument._id.toString();
             setCustomers(oldCustomers => {
-              return (
-                oldCustomers.map((customer) => {
-                  if (customer._id === changedCustomerId) {
-                    customer.tab_balance = parseFloat(change.fullDocument.tab_balance);
-                    customer.venmo = change.fullDocument.venmo;
-                  }
-                  return customer;
-                })
-              );
+              const newCustomers = oldCustomers.map((customer) => {
+                if (customer._id === changedCustomerId) {
+                  customer.tab_balance = parseFloat(change.fullDocument.tab_balance);
+                  customer.venmo = change.fullDocument.venmo;
+                }
+                return customer;
+              });
+              return newCustomers;
             });
           }
         }
@@ -83,7 +65,7 @@ function TabsView() {
     if (!isMaintainTabsRunning) {
       maintainTabs();
     }
-  }, [user]);
+  }, [user, setCustomers]);
 
   return (
     <div className="tabsViewContainer">
