@@ -15,6 +15,7 @@
     box-sizing: border-box;
     padding-inline: 15px;
     padding-top: 10px;
+    background-color: white;
 }
 
 /* Subtext for the tabs (in a light gray color) */
