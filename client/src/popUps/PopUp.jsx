@@ -2,6 +2,7 @@ import React from 'react';
 import AddRemovePopUp from './AddRemovePopUp';
 import VenmoPopUp from './VenmoPopUp';
 import SelectorPopUp from './SelectorPopUp';
+import HistoryPopUp from './HistoryPopUp';
 
 /**
   * PopUp is a wrapper component that determines which pop-up to show.
@@ -21,6 +22,10 @@ function PopUp({ showPopUp, customer, popUpType }) {
         />)
         : popUpType === "selector" ? (
         <SelectorPopUp
+          showPopUp={showPopUp}
+          customer={customer}/>)
+        : popUpType === "history" ? (
+        <HistoryPopUp
           showPopUp={showPopUp}
           customer={customer}/>)
         :

@@ -3,7 +3,7 @@ import { useAppState } from '../contexts/StateContext';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function BartenderShoppingHeader({ isCartEmpty, getCartQuantity }) {
+function BartenderShoppingHeader({ isCartEmpty, getCartQuantity, clearSearchAndFilters }) {
     const { state, setState } = useAppState();
     const customer = state?.customer;
     const navigate = useNavigate();
@@ -11,6 +11,7 @@ function BartenderShoppingHeader({ isCartEmpty, getCartQuantity }) {
 
     function handleCartClick() {
         if (!isCartEmpty) {
+            clearSearchAndFilters();
             setState(prevState => ({ ...prevState, inCartView: true }));
         }
         else { // animate the name shaking if the cart is empty

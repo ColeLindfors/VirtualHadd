@@ -13,9 +13,6 @@
 h1 {
     margin-top: 10px;
 }
-.popupButtonsContainer.rightOnly {
-    flex-direction: row-reverse;
-}
 
 .popupContainer .purpleButton {
     box-sizing: border-box;

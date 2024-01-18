@@ -48,7 +48,7 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
                 }
                 {!isGuest &&
                     <span 
-                        onClick={() => handleNotImplementedRedirect('Statistics')} // ! Remove this line when statistics are implemented
+                        onClick={() => showPopUp(user.customData, 'history')}
                         className={`material-symbols-outlined ${activeTab === 'statistics' ? 'active-header' : ''}`}
                     >
                         book_2

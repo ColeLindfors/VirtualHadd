@@ -110,6 +110,12 @@ function Menu () {
 		return drinksInCart;
 	}
 
+	function clearSearchAndFilters() {
+		setSearchTerm('');
+		setVariety('all_varieties');
+		setLiquor('all_liquors');
+	}
+
 	return (
 		<div className='menu-container'>
 			<div className="gray-header-background">
@@ -120,7 +126,8 @@ function Menu () {
 							cart={cart}
 						/>
 					: customer ? // Bartender picking out drinks for a customers order
-						<BartenderShoppingHeader 
+						<BartenderShoppingHeader
+							clearSearchAndFilters={clearSearchAndFilters}
 							isCartEmpty={isEmpty(cart)} 
 							getCartQuantity={getCartQuantity}
 						/>

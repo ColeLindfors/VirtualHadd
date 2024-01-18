@@ -7,6 +7,7 @@ import * as Realm from 'realm-web';
 function Drink ({ drink, setCart, cart, setDrinks}) {
     const { state } = useAppState();
     const { user } = useContext(UserContext);
+    const inCartView = state?.inCartView;
 
     const handleAddDrink = () => {
         if (!cart[drink.id]) {
@@ -75,25 +76,30 @@ function Drink ({ drink, setCart, cart, setDrinks}) {
                                 drink.soldOut ? // sold out case
                                     <div className='sold-out'>SOLD OUT</div>
                                 : <>
-                                    { // editable quantity case
+                                    {inCartView ? (
+                                        <h3 className='drink-quantity'>x{cart[drink.id]?.quantity || 0}</h3>
+                                    ) : (
+                                        // editable quantity case
                                         cart[drink.id] ?
                                         <>
                                             <span // remove one drink from cart button
-                                            className='material-symbols-outlined'
-                                            onClick={handleRemoveDrink}
+                                                className='material-symbols-outlined'
+                                                onClick={handleRemoveDrink}
                                             >
-                                            remove
+                                                remove
                                             </span>
                                             <h3 className='drink-quantity'>{cart[drink.id].quantity}</h3>
                                         </>
                                         : <></>
-                                    }
-                                    <span // add to cart button
-                                        className='material-symbols-outlined'
-                                        onClick={handleAddDrink}
-                                    >
-                                        add
-                                    </span>
+                                    )}
+                                    {!inCartView && ( // add to cart button (not in cart view)
+                                        <span
+                                            className='material-symbols-outlined'
+                                            onClick={handleAddDrink}
+                                        >
+                                            add
+                                        </span>
+                                    )}
                                 </>
                             }
                         </div>
@@ -124,7 +130,7 @@ function Drink ({ drink, setCart, cart, setDrinks}) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Drink;

@@ -54,8 +54,7 @@ function SelectorPopUp({ showPopUp, customer}) {
                             </span>
                         </div>
                     </Link>
-                    
-                    <div className="purpleButton" onClick={() => handleNotImplemented()}>
+                    <div className="purpleButton" onClick={() => showPopUp(customer, 'history')}>
                         <h3>Order History</h3>
                         <span className='material-symbols-outlined'>
                             book_2

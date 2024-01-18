@@ -24,14 +24,8 @@ function TabsView( {customers, setCustomers}) {
   
         const collection = client.db("VirtualHaddDB").collection("users");
         changeStream = collection.watch(); // Start change stream
-        let lastChangeId = null; // we only want to update if the change is a new change
         for await (const change of changeStream) {
-          // TODO: finish repeat change optimization, still not great
-          if (String(change._id) === String(lastChangeId)) {
-            console.log('change already handled');
-            continue;
-          }
-          lastChangeId = change._id;
+          // TODO: build change optimization, didnt work before
           if(change.operationType === 'update') {
             const changedCustomerId = change.fullDocument._id.toString();
             setCustomers(oldCustomers => {
