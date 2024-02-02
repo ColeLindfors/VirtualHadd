@@ -54,7 +54,7 @@ function HistoryPopUp({ showPopUp, customer }) {
 			case "pending":
 				return "Order Placed";
 			case "declined":
-				return "Declined";
+				return "Declined By " + claimedByFirstName;
 			case "cancelled":
 				return "Cancelled";
 			case "completed":
@@ -133,7 +133,7 @@ function HistoryPopUp({ showPopUp, customer }) {
 							</div>
 							<div className="date-price-row">
 								<h2>{mapDateISOString(order.date)}</h2>
-								<h2>${getTotalPrice(order.drinks)}</h2> {/*TODO: FINISH THIS*/}
+								<h2>${getTotalPrice(order.drinks)}</h2>
 							</div>
 						</div>
 						{renderOrderContainer(order)}

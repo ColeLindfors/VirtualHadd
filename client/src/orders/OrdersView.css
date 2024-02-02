@@ -1,0 +1,42 @@
+.orders-view-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background: white;
+
+    .active-orders-header {
+        text-align: center;
+        font-size: 22px;
+        font-weight: 600;
+        color: #646464;
+        margin: 5px 0;
+    }
+
+    .orders-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .order-li {
+            width: 100%;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    .scrollable-orders-list {
+        overflow-y: auto;
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+}

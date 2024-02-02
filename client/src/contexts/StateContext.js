@@ -5,9 +5,16 @@ const StateContext = createContext();
 
 const StateProvider = ({ children }) => {
   const [state, setState] = useState({});
+  const [customers, setCustomers] = useState([]);
+  const [drinksDict, setDrinksDict] = useState({}); // Hack, dont want to refactor rn
 
   return (
-    <StateContext.Provider value={{ state, setState }}>
+    <StateContext.Provider 
+      value={{ 
+        state, setState, 
+        customers, setCustomers,
+        drinksDict, setDrinksDict
+      }}>
       {children}
     </StateContext.Provider>
   );
@@ -21,4 +28,4 @@ const useAppState = () => {
   return context;
 };
 
-export { StateProvider, useAppState };
+export { StateProvider, useAppState, StateContext };

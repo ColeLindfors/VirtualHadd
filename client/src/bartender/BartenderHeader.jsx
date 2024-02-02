@@ -14,10 +14,6 @@ function BartenderHeader ({activeTab}) {
         }
     }
 
-    const handleNotImplementedRedirect = () => {
-        alert('Not implemented yet!');
-    }
-
     const handleClickMenu = () => {
         setState(prevState => ({ ...prevState, customer: null }));
     }
@@ -31,14 +27,13 @@ function BartenderHeader ({activeTab}) {
                         Menu
                     </h1>
                 </Link>
-                {/* <Link to="/orders"> */}
+                <Link to="/orders">
                     <h1 
                         className={activeTab === 'orders' ? 'active' : ''}
-                        onClick={handleNotImplementedRedirect} // ! Remove this line when orders are implemented
                     >
                         Orders
                     </h1>
-                {/* </Link> */}
+                </Link>
                 <Link to="/">
                     <h1 className={activeTab === 'tabs' ? 'active' : ''}>
                         Tabs
@@ -52,9 +47,6 @@ function BartenderHeader ({activeTab}) {
                     logout
                 </span>     
             </div>
-            {/* <div className='header-buttons'> */}
-                           
-            {/* </div> */}
         </div>
     )
 }

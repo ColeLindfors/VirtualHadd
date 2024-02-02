@@ -1,65 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../contexts/user.context';
+import React, { useState } from 'react';
 import BartenderHeader from './BartenderHeader';
 import SearchBar from '../menu/SearchBar';
 import Tabs from './Tabs';
 import './TabsView.css';
 
-function TabsView( {customers, setCustomers}) {
+function TabsView({customers}) {
   const [searchTerm, setSearchTerm] = useState('');
-  const { user } = useContext(UserContext);
-
-  useEffect(() => {
-    let isMaintainTabsRunning = false;
-    let client; // Store the client instance for reconnection
-    let changeStream; // Store the change stream for closure
-  
-    async function maintainTabs() {
-      isMaintainTabsRunning = true;
-  
-      try {
-        if (!client) {
-          client = user.mongoClient("mongodb-atlas"); // Create client if needed
-        }
-  
-        const collection = client.db("VirtualHaddDB").collection("users");
-        changeStream = collection.watch(); // Start change stream
-        for await (const change of changeStream) {
-          // TODO: build change optimization, didnt work before
-          if(change.operationType === 'update') {
-            const changedCustomerId = change.fullDocument._id.toString();
-            setCustomers(oldCustomers => {
-              const newCustomers = oldCustomers.map((customer) => {
-                if (customer._id === changedCustomerId) {
-                  customer.tab_balance = parseFloat(change.fullDocument.tab_balance);
-                  customer.venmo = change.fullDocument.venmo;
-                }
-                return customer;
-              });
-              return newCustomers;
-            });
-          }
-        }
-      } catch (error) {
-        // Handle errors (including WebSocket errors)
-        console.error('Error maintaining tabs:', error);
-        reconnect(); // Attempt reconnection
-      } finally {
-        isMaintainTabsRunning = false;
-      }
-    }
-  
-    async function reconnect() {
-      // Retry connection after a delay
-      console.log('Retrying connection...');
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Adjust delay as needed
-      maintainTabs(); // Restart the process
-    }
-  
-    if (!isMaintainTabsRunning) {
-      maintainTabs();
-    }
-  }, [user, setCustomers]);
 
   return (
     <div className="tabsViewContainer">

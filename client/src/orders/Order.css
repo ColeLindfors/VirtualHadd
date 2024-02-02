@@ -1,0 +1,98 @@
+.order-container {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    border: 1px solid #F2F2F2;
+    /* Box Shadow */
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15);
+
+    .order-header {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 3px;
+    }
+
+    .order-header.claimed {
+        color: #D19600;
+    }
+    .order-header.pending {
+        color: #2881B4;
+    }
+
+    .drinks-list {
+        list-style: none;
+        padding: 0;
+        width: 100%;
+        margin: 0;
+        .drink-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            .p {
+                font-size: 18px;
+                font-weight: 700;
+                margin: 3px;
+            }
+            .p.x-divider {
+                font-weight: 600;
+                color: #646464;
+            }
+            .p.drink-name {
+                color: #646464;
+            }
+            .drink-icon {
+                width: 40px;
+                height: 40px;
+                margin-left: -10px;
+            }
+        }
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        margin-top: 5px;
+        .button {
+            margin: 5px;
+            border-radius: 10px;
+            border: none;
+            font-size: 22px;
+            height: 45px;
+            font-weight: 700;
+            color: white;
+        }
+        .button.unclaim-button {
+            background:#D19600;
+            width: 50%;
+        }
+        .button.complete-button {
+            background:#2C936E;
+            width: 50%;
+        }
+        .button.decline-button {
+            background:#F00;
+            width: 50%;
+        }
+        .button.claim-button {
+            background:#2881B4;
+            width: 50%;
+        }
+        .button.cancel-button {
+            background:#F00;
+            width: 100%;
+        }
+    }
+}
+
+.order-container.highlight {
+    box-shadow: 0px 1px 5px 3px rgba(209, 150, 0, 0.30);
+}
+

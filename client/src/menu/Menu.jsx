@@ -10,7 +10,7 @@ import SearchBar from './SearchBar';
 import Drinks from './Drinks';
 import './Menu.css';
 import { useAppState } from '../contexts/StateContext';
-
+import { StateContext } from '../contexts/StateContext';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -29,6 +29,8 @@ function Menu () {
 	const inCartView = state?.inCartView;
 	const navigate = useNavigate();
 	const location = useLocation();
+
+	const { setDrinksDict } = useContext(StateContext);
 
 	useEffect( () => {
 		if (!customer && location.pathname.includes('/ordering')) {
@@ -69,12 +71,18 @@ function Menu () {
 				setDrinks(newDrinks);
 				setLiquorOptions(newLiquorOptions);
 				setVarietyOptions(newVarietyOptions);
+
+				// hacky way to get the drinks into the state context, should use drinksDict ONLY instead
+				setDrinksDict(newDrinks.reduce((acc, drink) => {
+					acc[drink.id] = drink;
+					return acc;
+				}, {}));
 			} catch (error) {
 				console.error("Failed to fetch drinks: ", error);
 			}
 		}
 		fetchDrinks();
-	  }, [user, customer, navigate, location]);
+	  }, [user, customer, navigate, location, setDrinksDict]);
 
 	const handleVarietyChange = (event) => {
 		setVariety(event.target.value);

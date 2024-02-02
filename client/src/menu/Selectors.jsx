@@ -2,7 +2,7 @@
 import React from 'react';
 import './Selectors.css';
 
-
+// TODO: fix the all_liquors css to be centered in the button
 function Selectors({variety, liquor, handleVarietyChange, handleLiquorChange, liquorOptions, varietyOptions}) {
 
     return(
@@ -25,7 +25,7 @@ function Selectors({variety, liquor, handleVarietyChange, handleLiquorChange, li
                     className='dynamic-selector'
                     onChange={handleLiquorChange}
                 >
-                    <option key="all_liquors" value="all_liquors">All Liquors</option>
+                    <option key="all_liquors" value="all_liquors">All Liquors</option> 
                     {liquorOptions.map((liquorOption) => 
                         <option key={liquorOption} value={liquorOption}>
                             {liquorOption.charAt(0).toUpperCase() + liquorOption.slice(1)}
