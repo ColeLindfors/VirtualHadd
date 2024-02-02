@@ -1,14 +1,17 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { UserContext } from '../contexts/user.context';
+import { StateContext } from '../contexts/StateContext';
 import './CustomerHeader.css';
 import PopUp from '../popUps/PopUp';
 
-function CustomerHeader ({activeTab, isCartEmpty = true}) {
+function CustomerHeader ({activeTab, clearSearchAndFilters, isCartEmpty = true}) {
 
-
+    const { setState } = useContext(StateContext);
     const [popUpType, setPopUpType] = useState(null);
     const {logoutUser, user} = useContext(UserContext);
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         if (window.confirm('Logout?')) {
@@ -16,8 +19,12 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
         }
     }
 
-    function handleNotImplementedRedirect(feature) {
-        alert(`${feature} not implemented yet!`);
+    function handleCartClick() {
+        if (!isCartEmpty) {
+            clearSearchAndFilters();
+            setState(prevState => ({ ...prevState, inCartView: true }));
+            navigate('/cart');
+        }
     }
 
       /**
@@ -55,8 +62,16 @@ function CustomerHeader ({activeTab, isCartEmpty = true}) {
                     </span>
                 }
                 {!isGuest &&
+                    <Link to="/orders">
+                        <span 
+                            className={`material-symbols-outlined ${activeTab === 'orders' ? 'active-header' : ''}`}>
+                            pending
+                        </span>
+                    </Link>
+                }
+                {!isGuest &&
                     <span 
-                        onClick={() => handleNotImplementedRedirect('Ordering')} // ! Remove this line when shopping cart is implemented
+                        onClick={handleCartClick}
                         className={`material-symbols-outlined ${activeTab === 'shoppingCart' ? 'active-header' : ''}`}>
                         {!isCartEmpty && <div className="cartFilledIcon"></div>}
                         shopping_cart

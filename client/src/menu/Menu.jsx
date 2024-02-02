@@ -4,7 +4,7 @@ import { UserContext } from '../contexts/user.context';
 import CustomerHeader from '../customer/CustomerHeader';
 import BartenderHeader from '../bartender/BartenderHeader';
 import BartenderShoppingHeader from '../menu/BartenderShoppingHeader';
-import BartenderCartHeader from '../menu/BartenderCartHeader';
+import CartHeader from './CartHeader';
 import Selectors from './Selectors';
 import SearchBar from './SearchBar';
 import Drinks from './Drinks';
@@ -124,14 +124,22 @@ function Menu () {
 		setLiquor('all_liquors');
 	}
 
+	// make sure URL is correct when leaving the cart view
+	useEffect(() => {
+		if (user.customData.role === 'customer' && !inCartView) {
+			navigate('/');
+		}
+	}, [user, inCartView, navigate]);
+
 	return (
 		<div className='menu-container'>
 			<div className="gray-header-background">
 				{user.customData.role === 'bartender'
 					? inCartView ? // Bartender reviewing cart
-						<BartenderCartHeader
+						<CartHeader
 							getCartQuantity={getCartQuantity}
 							cart={cart}
+							setCart={setCart}
 						/>
 					: customer ? // Bartender picking out drinks for a customers order
 						<BartenderShoppingHeader
@@ -140,7 +148,17 @@ function Menu () {
 							getCartQuantity={getCartQuantity}
 						/>
 					: <BartenderHeader activeTab='menu'/> // Bartender menu (for setting drink availability)
-				: <CustomerHeader isCartEmpty={isEmpty(cart)} activeTab='menu'/> // Customer and Guest case
+				: inCartView ? // Customer reviewing cart
+					<CartHeader
+						getCartQuantity={getCartQuantity}
+						cart={cart}
+						setCart={setCart}
+					/>
+				: <CustomerHeader // Customer or guest viewing menu
+					isCartEmpty={isEmpty(cart)} 
+					activeTab='menu'
+					clearSearchAndFilters={clearSearchAndFilters}
+				/> // Customer and Guest case
 				}
 				{!inCartView ? // Selector and Search Bar only show up when not in cart view
 					<>

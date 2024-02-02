@@ -5,7 +5,6 @@ import { StateContext } from './contexts/StateContext'
 import TabsView from './bartender/TabsView'
 import OrdersView from './orders/OrdersView'
 import Menu from './menu/Menu'
-import CustomerCart from './customer/CustomerCart'
 import Login from './login/Login'
 import PrivateRoute from './PrivateRoute'
 import './Home.css';
@@ -195,8 +194,9 @@ function Home() {
       return (
         <>
           <Route path="/" element={<Menu />} />
-          <Route path ="/cart" element={<CustomerCart />} />
+          <Route path ="/cart" element={<Menu />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="/orders" element={<OrdersView orders={orders} setOrders={setOrders}/>} />
 
         </>
       )
