@@ -25,8 +25,10 @@ function CustomerHeader ({activeTab, clearSearchAndFilters, isCartEmpty = true})
             clearSearchAndFilters();
             setState(prevState => ({ ...prevState, inCartView: true }));
             navigate('/cart');
+        } else if (!isBarOpen){
+            alert('Hadd Bar is not accepting orders at this moment');
         } else {
-            alert('Hadd Bar is not accepting orders at this moment.');
+            alert('Your cart is empty');
         }
         
     }
