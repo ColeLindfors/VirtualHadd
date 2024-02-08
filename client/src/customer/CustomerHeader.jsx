@@ -9,6 +9,7 @@ import PopUp from '../popUps/PopUp';
 function CustomerHeader ({activeTab, clearSearchAndFilters, isCartEmpty = true}) {
 
     const { setState } = useContext(StateContext);
+    const { isBarOpen } = useContext(StateContext);
     const [popUpType, setPopUpType] = useState(null);
     const {logoutUser, user} = useContext(UserContext);
     const navigate = useNavigate();
@@ -20,11 +21,14 @@ function CustomerHeader ({activeTab, clearSearchAndFilters, isCartEmpty = true})
     }
 
     function handleCartClick() {
-        if (!isCartEmpty) {
+        if (isBarOpen && !isCartEmpty) {
             clearSearchAndFilters();
             setState(prevState => ({ ...prevState, inCartView: true }));
             navigate('/cart');
+        } else {
+            alert('Hadd Bar is not accepting orders at this moment.');
         }
+        
     }
 
       /**
@@ -74,7 +78,7 @@ function CustomerHeader ({activeTab, clearSearchAndFilters, isCartEmpty = true})
                         onClick={handleCartClick}
                         className={`material-symbols-outlined ${activeTab === 'shoppingCart' ? 'active-header' : ''}`}>
                         {!isCartEmpty && <div className="cartFilledIcon"></div>}
-                        shopping_cart
+                        {isBarOpen ? 'shopping_cart' : 'shopping_cart_off'}
                     </span>
                 }
                 <span 

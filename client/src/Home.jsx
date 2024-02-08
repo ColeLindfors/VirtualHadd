@@ -14,9 +14,11 @@ function Home() {
   const {user} = useContext(UserContext);
   const {customers, setCustomers} = useContext(StateContext);
   const {setDrinksDict} = useContext(StateContext);
+  const {setIsBarOpen} = useContext(StateContext);
   const [orders, setOrders] = useState({});
   const [areTabsMaintained, setAreTabsMaintained] = useState(false);
   const [areOrdersMaintained, setAreOrdersMaintained] = useState(false);
+  const [areSettingsMaintained, setAreSettingsMaintained] = useState(false);
 
   useEffect( () => {
     async function fetchTabs() {
@@ -174,6 +176,46 @@ function Home() {
       fetchDrinks();
     }
   }, [user, setDrinksDict]);
+
+  useEffect(() => {
+    async function fetchSettings() {
+      try {
+        const settings = await user.functions.getSettings();
+        setIsBarOpen(settings.isBarOpen);
+      } catch (error) {
+        console.error("Failed to fetch settings: ", error);
+      }
+    }
+    if (user?.customData?.role === 'bartender' || user?.customData?.role === 'customer'){
+      fetchSettings();
+    }
+  }, [user, setIsBarOpen]);
+
+  useEffect(() => {
+    async function maintainSettings() {
+      try {
+        const client = user.mongoClient("mongodb-atlas");
+        const collection = client.db("VirtualHaddDB").collection("settings");
+        const changeStream = collection.watch();
+        for await (const change of changeStream) {
+          setIsBarOpen(change.fullDocument.isBarOpen);
+        }
+      } catch (error) {
+        console.error('Error maintaining settings:', error);
+        setAreSettingsMaintained(false);
+      } finally {
+        setAreSettingsMaintained(false);
+      }
+    }
+  
+    if (
+      (user?.customData?.role === 'bartender' || user?.customData?.role === 'customer') &&
+      !areSettingsMaintained
+    ) {
+      maintainSettings();
+      setAreSettingsMaintained(true);
+    }
+  }, [user, areSettingsMaintained, setIsBarOpen, setAreSettingsMaintained]);
 
 
   /**

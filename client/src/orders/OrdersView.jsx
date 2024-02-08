@@ -8,9 +8,10 @@ import Order from './Order';
 import './OrdersView.css';
 
 
-function OrdersView ({ orders, setOrders }) {
+function OrdersView ({ orders }) {
     const { user } = useContext(UserContext);
     const { customers } = useContext(StateContext);
+    const { isBarOpen } = useContext(StateContext);
     const [searchTerm, setSearchTerm] = useState('');
     const [sortedOrders, setSortedOrders] = useState([]);
 
@@ -48,6 +49,14 @@ function OrdersView ({ orders, setOrders }) {
         sortOrders();
     }, [orders, user, searchTerm, customers]);
 
+    async function handleToggleBarStatus(status) {
+        try {
+            await user.functions.setSetting("isBarOpen", status);
+        } catch (error) {
+            console.error("Failed to toggle bar status: ", error);
+        }
+    }
+
     function scrollToTop() {
         // scroll the scrollable-orders-list to the top
         const scrollableOrdersList = document.querySelector('.scrollable-orders-list');
@@ -69,9 +78,26 @@ function OrdersView ({ orders, setOrders }) {
                 />
             </div>
             <div className="scrollable-orders-list">
-                <h2 className="active-orders-header">
-                    {sortedOrders.length} Active Order{sortedOrders.length !== 1 ? 's' : ''}
-                </h2>
+                <div className="orders-header">
+                    {user.customData.role === 'bartender' ? // only show buttons if user is a bartender
+                        (isBarOpen ? // bar is open
+                            <button className="close bar-status-button" onClick={() => handleToggleBarStatus(false)}>
+                                Close Bar
+                            </button>
+                        : // bar is closed
+                            <button className="open bar-status-button" onClick={() => handleToggleBarStatus(true)}>
+                                Open Bar
+                            </button>
+                        )
+                    : // show bar status if user is a customer
+                        <h2 className="active-orders-header">
+                            Bar is {isBarOpen ? 'Open' : 'Closed'}
+                        </h2>
+                    }
+                    <h2 className="active-orders-header">
+                        {sortedOrders.length} Active Order{sortedOrders.length !== 1 ? 's' : ''}
+                    </h2>
+                </div>
                 <div className="orders-list">
                     {sortedOrders.map((order) => (
                         <li className="order-li" key={order._id}>

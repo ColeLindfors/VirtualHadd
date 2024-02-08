@@ -6,37 +6,67 @@
     height: 100%;
     box-sizing: border-box;
     background: white;
+}
 
-    .active-orders-header {
-        text-align: center;
-        font-size: 22px;
-        font-weight: 600;
-        color: #646464;
-        margin: 5px 0;
-    }
+.orders-view-container .active-orders-header {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: #646464;
+    margin: 5px 0;
+}
 
-    .orders-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        width: 100%;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        .order-li {
-            width: 100%;
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    }
-    .scrollable-orders-list {
-        overflow-y: auto;
-        height: 100%;
-        width: 100%;
-        box-sizing: border-box;
-    }
-    
+.orders-view-container .orders-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.orders-view-container .orders-list .order-li {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.orders-view-container .scrollable-orders-list {
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.orders-view-container .scrollable-orders-list .orders-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 5px 0;
+    box-sizing: border-box;
+}
+
+.scrollable-orders-list .orders-header .bar-status-button {
+    /* margin: 5px; */
+    border-radius: 10px;
+    border: none;
+    font-size: 22px;
+    height: 35px;
+    font-weight: 700;
+    color: white;
+    width: 150px;
+}
+
+.scrollable-orders-list .orders-header .bar-status-button.open {
+    background-color: #2C936E;
+}
+
+.scrollable-orders-list .orders-header .bar-status-button.close {
+    background-color: #FF0000;
 }

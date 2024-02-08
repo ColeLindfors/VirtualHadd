@@ -7,13 +7,15 @@ const StateProvider = ({ children }) => {
   const [state, setState] = useState({});
   const [customers, setCustomers] = useState([]);
   const [drinksDict, setDrinksDict] = useState({}); // Hack, dont want to refactor rn
+  const [isBarOpen, setIsBarOpen] = useState(true);
 
   return (
     <StateContext.Provider 
       value={{ 
         state, setState, 
         customers, setCustomers,
-        drinksDict, setDrinksDict
+        drinksDict, setDrinksDict,
+        isBarOpen, setIsBarOpen
       }}>
       {children}
     </StateContext.Provider>
